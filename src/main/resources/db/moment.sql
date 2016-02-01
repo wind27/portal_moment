@@ -1,0 +1,1 @@
+INSERT INTO `moment` (`id`, `title`, `content`, `uid`, `create_time`, `update_time`, `publish_time`, `praise_uid`, `collection_uid`, `view_num`, `status`) VALUES (1, '创建第一个此刻', '编辑第一个此刻', 1, 1454319055092, 1454323480807, 1454319055092, '[]', '[]', NULL, 1);

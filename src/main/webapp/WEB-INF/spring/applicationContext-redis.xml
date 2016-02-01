@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+<!--     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="200"/>
+        <property name="maxIdle" value="30"/>
+        <property name="maxWaitMillis" value="30000"/>
+        <property name="testOnBorrow" value="false"/>
+        向调用者输出“链接”资源时，是否检测是有有效，如果无效则从连接池中移除，并尝试获取继续获取。设为true，一个挂都不能用
+        <property name="testOnReturn" value="true"/>
+        向连接池“归还”链接时，是否检测“链接”对象的有效性。
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="${server.redis.hostname}"/>
+        <constructor-arg index="2" value="${server.redis.port}"/>
+    </bean>
+
+    <bean id="redisUtil" class="com.wind.utils.RedisUtil">
+        <property name="jedisPool" ref="jedisPool"/>
+    </bean> -->
+
+</beans>

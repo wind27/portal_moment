@@ -1,0 +1,1 @@
+INSERT INTO `user` (`id`, `name`, `nick`, `birth`, `head_image`, `single`, `mobile`, `email`, `age`, `sex`, `tel`, `address`, `province`, `city`, `county`, `status`, `register_time`, `update_time`, `last_login_time`) VALUES (1, '钱春', '游风', 2016, '', 1, '18301633814', 'qianchun27@hotmail.com', 0, 1, '18301633814', 'xxxx', '陕西', '咸阳市', '秦都区', 0, 2016, 2016, 2016);

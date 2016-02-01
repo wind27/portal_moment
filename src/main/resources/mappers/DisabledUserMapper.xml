@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wind.entity.DisabledUser">
+	<resultMap id="disabledUserMap" type="com.wind.entity.DisabledUser">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="uid" property="uid" jdbcType="BIGINT" />
+		<result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="reason" property="reason" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 获取禁用指定用户 -->
+	<select id="findByUid" parameterType="map" resultMap="disabledUserMap">
+		select 
+			id,uid,operator_id,type,reason,create_time 
+		from 
+			forbiddens 
+		where 
+			uid = #{uid}
+	</select>
+	
+	<!-- 获取禁用用户集合 -->
+	<select id="findList" parameterType="map" resultMap="disabledUserMap">
+		select 
+			id,uid,operator_id,type,reason,create_time 
+		from 
+			forbiddens 
+		<where> 
+			<if test="uids != null">
+				uid in
+				<foreach collection="uids" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+			</if>
+		</where>
+	</select>
+</mapper>
