@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.wind.commons.Constant;
-import com.wind.commons.Constant.Status;
+import com.wind.commons.Constant.DeleteStatus;
 import com.wind.entity.Moment;
 import com.wind.service.IMomentService;
 
@@ -30,8 +30,8 @@ public class MomentController {
      * 
      * @author qianchun  @date 2016年2月1日 下午3:42:16
      */
-    public Moment add(Moment moment) {
-        return momentService.add(moment);
+    public Moment create(Moment moment) {
+        return momentService.create(moment);
     }
     
     /**
@@ -42,7 +42,7 @@ public class MomentController {
      * @return
      */
     public boolean delete(long uid) {
-        return momentService.updateStatus(uid, Constant.Status.DELETE_YES);
+        return momentService.updateStatus(uid, Constant.DeleteStatus.YES);
     }
     
     
@@ -73,7 +73,7 @@ public class MomentController {
         boolean flag = false;
         List<Moment> momentList = null;
         
-//        moment = add(moment);
+//        moment = create(moment);
 //        moment = findById(1l);
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", 1l);
@@ -83,7 +83,7 @@ public class MomentController {
         
         momentList = findList();
         JSONArray array = JSONArray.fromObject(momentList);
-        System.out.println(array.toString());
+         System.out.println(array.toString());
     }
     
     public Moment createMoment() {
@@ -91,7 +91,7 @@ public class MomentController {
         JSONArray emptyArrayJson = JSONArray.fromObject(new ArrayList<>());
         
         moment.setTitle("创建第一个此刻");
-        moment.setStatus(Status.DELETE_NO);
+        moment.setStatus(DeleteStatus.NO);
         moment.setContent("今天创建第一个此刻");
 
         moment.setUid(1l);

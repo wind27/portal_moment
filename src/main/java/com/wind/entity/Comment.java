@@ -16,6 +16,8 @@ public class Comment implements Serializable {
     public int targetType;//评论类型
     public String content;//评论内容
     public long pid;//父ID
+    public int operateType;//操作类型：1、评论；2、回复；3、转发
+    public long targetUid;//目标用户uid
     public int status;//状态：0、删除；1、正常
     public long createTime;//发布评论时间
     
@@ -60,5 +62,17 @@ public class Comment implements Serializable {
     }
     public void setCreateTime(long createTime) {
         this.createTime = createTime;
+    }
+    public int getOperateType() {
+        return operateType;
+    }
+    public void setOperateType(int operateType) {
+        this.operateType = operateType;
+    }
+    public long getTargetUid() {
+        return targetUid;
+    }
+    public void setTargetUid(long targetUid) {
+        this.targetUid = targetUid;
     }
 }

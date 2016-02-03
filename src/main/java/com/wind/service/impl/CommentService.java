@@ -8,8 +8,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.wind.commons.Constant.DeleteStatus;
 import com.wind.commons.DataSourceSwitch;
 import com.wind.dao.ICommentDao;
+import com.wind.dao.IMomentDao;
 import com.wind.entity.Comment;
 import com.wind.service.ICommentService;
 
@@ -28,6 +30,9 @@ public class CommentService implements ICommentService {
     
     @Resource
     ICommentDao commentDao;
+    
+    @Resource
+    IMomentDao momentDao;
 
     @Override
     public Comment findById(long id) {
@@ -35,14 +40,14 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public Comment add(Comment comment) {
+    public Comment create(Comment comment) {
         return commentDao.insert(comment);
     }
 
-    public boolean updateStatus(long id, int status) {
+    public boolean delete(long id) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", id);
-        params.put("status", status);
+        params.put("status", DeleteStatus.YES);
         return commentDao.update(params);
     }
     

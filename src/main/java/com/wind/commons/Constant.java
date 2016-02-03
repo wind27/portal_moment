@@ -61,35 +61,90 @@ public class Constant {
     }
     
     /**
-     * 状态
+     * 操作状态
      * 
      * @author qianchun
      * @date 2016年1月25日 下午4:53:31
      */
-    public class Success {
+    public class MetaCode {
         public static final int FALSE = 0;
         public static final int TRUE = 1;
     }
     
+    public class MetaMsg {
+        public static final String SUCCESS = "请求成功";
+        public static final String FAIL = "请求失败";
+        public static final String ERROR = "请求异常";
+    }
+    
+    /**
+     * 单身
+     * 
+     * @author qianchun
+     * @date 2016年2月2日 下午12:05:52
+     */
     public class Single {
         public static final int FALSE = 0;
         public static final int TRUE = 1;
     } 
     
+    /**
+     * 用户状态
+     * 
+     * @author qianchun
+     * @date 2016年2月2日 下午12:05:43
+     */
     public class UserStatus {
         public static final int DISABLE = 0;
         public static final int ENABLE = 1;
     }
     
-    public class Status {
-        public static final int DELETE_YES = 0;
-        public static final int DELETE_NO = 1;
+    /**
+     * 逻辑删除状态
+     * 
+     * @author qianchun
+     * @date 2016年2月2日 下午12:05:10
+     */
+    public class DeleteStatus {
+        public static final int YES = 0;
+        public static final int NO = 1;
     }
     
+    /**
+     * 性别 
+     * 
+     * @author qianchun
+     * @date 2016年2月2日 下午12:04:58
+     */
     public class Sex {
         public static final int FEMALE = 0;
         public static final int MALE = 1;
     }
+    
+    /**
+     * 评论对象类型
+     * 
+     * @author qianchun
+     * @date 2016年2月2日 下午12:04:20
+     */
+    public class CommentTargetType {
+        public static final int MOMENT = 1;
+        public static final int ARTICLE = 2;
+    }
+    
+    /**
+     * 回复操作类型
+     * 
+     * @author qianchun
+     * @date 2016年2月2日 下午12:04:08
+     */
+    public class CommentOperateType {
+        public static final int COMMENT = 1;
+        public static final int REPLY = 2;
+        public static final int REPOST = 3;
+    }
+    
+    public static final int COMMENT_ROOT_PID = 0;
     
     //耗时日志模板
     public static final String LOG_UID_URL_DESC_COSTTIME = "用户uid:{}; 请求url:{}; 接口描述:{}; 耗时{}毫秒";

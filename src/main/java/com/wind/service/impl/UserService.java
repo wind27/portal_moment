@@ -1,3 +1,4 @@
+
 package com.wind.service.impl;
 
 import java.util.HashMap;
@@ -47,5 +48,19 @@ public class UserService implements IUserService {
 
     public List<User> findList(Map<String, Object> params) {
         return userDao.findList(params);
+    }
+    
+    public Map<Long, User> findMap(Map<String, Object> params) {
+        Map<Long, User> userMap = new HashMap<>();
+        List<User> userList = userDao.findList(params);
+        if(userList != null) {
+            for(int i=0; i<userList.size(); i++) {
+                User user = userList.get(i);
+                if(user != null) {
+                    userMap.put(user.getId(), user);
+                }
+            }
+        }
+        return userMap;
     }
 }

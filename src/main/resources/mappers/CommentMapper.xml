@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wind.entity.Comment">
+	<resultMap id="commentMap" type="com.wind.entity.Comment">
+		<id column="id" property="id" jdbcType="BIGINT" />
+        <result column="target_id" property="targetId" jdbcType="BIGINT" />
+		<result column="target_type" property="targetType" jdbcType="INTEGER" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="pid" property="pid" jdbcType="BIGINT" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+		<result column="operate_type" property="operateType" jdbcType="INTEGER" />
+		<result column="target_uid" property="targetUid" jdbcType="BIGINT" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.wind.entity.Comment"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into comment (
+			target_id, 			target_type, 		content, 		pid, 
+			status, 			create_time,		operate_type,	target_uid
+		) 
+  		values (
+  			#{targetId},		#{targetType},		#{content},		#{pid},
+  			#{status},			#{createTime},		#{operateType},	#{targetUid}
+  		)
+	</insert>
+
+	<select id="findById" parameterType="long" resultMap="commentMap">
+		 select 
+		 	target_id, 			target_type, 		content, 		pid, 
+			status, 			create_time,		operate_type,	target_uid,
+			id
+		 from 
+		 	comment 
+	 	where id = #{id}
+	</select>
+
+	<select id="findByParam" parameterType="map" resultMap="commentMap">
+		select 
+			target_id, 			target_type, 		content, 		pid, 
+			status, 			create_time,		operate_type,	target_uid,
+			id
+	 	from 
+	 		comment 
+		<where>
+			<if test="uids != null">
+				id in
+				<foreach collection="uids" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+			</if>
+		</where>
+	</select>
+	
+	<update id="update" parameterType="com.wind.entity.Comment">
+		update comment 
+		<set>
+			<if test="status != null">
+				status = #{status},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="updateByParams" parameterType="map">
+		update comment 
+		<set>
+			<if test="status != null">
+				status = #{status},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+</mapper>

@@ -14,7 +14,7 @@ import com.wind.entity.Moment;
  */
 public interface IMomentService {
     public Moment findById(long id);
-    public Moment add(Moment moment);
+    public Moment create(Moment moment);
     public boolean updateStatus(long id, int status);
     public boolean update(Map<String, Object> params);
     

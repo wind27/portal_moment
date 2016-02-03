@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.wind.entity.Comment;
+import com.wind.entity.Moment;
 
 
 /**
@@ -15,8 +16,8 @@ import com.wind.entity.Comment;
  */
 public interface ICommentService {
     public Comment findById(long id);
-    public Comment add(Comment comment);
-    public boolean updateStatus(long id, int status);
+    public Comment create(Comment comment);
+    public boolean delete(long id);
     public boolean update(Map<String, Object> params);
     
     public List<Comment> findList(Map<String, Object> params);

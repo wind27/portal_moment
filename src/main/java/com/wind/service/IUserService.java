@@ -18,4 +18,5 @@ public interface IUserService {
     public boolean updateStatus(long id, int status);
     
     public List<User> findList(Map<String, Object> params);
+    public Map<Long, User> findMap(Map<String, Object> params);
 }

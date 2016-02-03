@@ -93,7 +93,7 @@
  
 	<select id="findById" parameterType="long" resultMap="momentMap">
 		 select 
-		 	id					title, 				content, 			uid, 			
+		 	id,					title, 				content, 			uid, 			
 		 	create_time, 		update_time, 		publish_time, 		praise_uid, 	
 		 	collection_uid, 	status,				view_num
 		 from 
@@ -103,7 +103,7 @@
 
 	<select id="findByParam" parameterType="map" resultMap="momentMap">
 		select 
-			id					title, 				content, 			uid, 			
+			id,					title, 				content, 			uid, 			
 		 	create_time, 		update_time, 		publish_time, 		praise_uid, 	
 		 	collection_uid, 	status,				view_num
 	 	from 

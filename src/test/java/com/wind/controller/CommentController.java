@@ -1,6 +1,5 @@
 package com.wind.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,10 +12,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.wind.commons.Constant;
+import com.wind.commons.Constant.CommentOperateType;
+import com.wind.commons.Constant.CommentTargetType;
+import com.wind.commons.Constant.DeleteStatus;
 import com.wind.entity.Comment;
 import com.wind.service.ICommentService;
+import com.wind.service.IMomentService;
 
-import net.sf.json.JSONArray;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:target/classes/applicationContext*.xml"})
@@ -24,13 +26,16 @@ public class CommentController {
     @Resource
     ICommentService commentService;
     
+    @Resource
+    IMomentService momentService;
+    
     /**
      * 添加用户
      * 
      * @author qianchun  @date 2016年2月1日 下午3:42:16
      */
-    public Comment add(Comment comment) {
-        return commentService.add(comment);
+    public Comment create(Comment comment) {
+        return commentService.create(comment);
     }
     
     /**
@@ -41,7 +46,7 @@ public class CommentController {
      * @return
      */
     public boolean delete(long uid) {
-        return commentService.updateStatus(uid, Constant.Status.DELETE_YES);
+        return commentService.delete(uid);
     }
     
     
@@ -68,38 +73,28 @@ public class CommentController {
     }
     @Test
     public void main() {
-        Comment comment = createComment();
-        boolean flag = false;
-        List<Comment> commentList = null;
+//        Comment comment = createComment();
+//        comment = create(comment);
         
-//        comment = add(comment);
-//        comment = findById(1l);
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("id", 1l);
-        params.put("updateTime", System.currentTimeMillis());
-        params.put("content", "编辑第一个此刻");
-        flag = update(params);
-        
-        commentList = findList();
-        JSONArray array = JSONArray.fromObject(commentList);
-        System.out.println(array.toString());
+//        Comment comment = commentService.findById(1l);
+//        JSONObject obj = JSONObject.fromObject(comment);
+//        System.out.println(obj.toString());
+
+//        List<Comment> commentList = null;
+//        commentList = findList();
+//        JSONArray array = JSONArray.fromObject(commentList);
+//        System.out.println(array.toString());
     }
     
     public Comment createComment() {
         Comment comment = new Comment();
-        JSONArray emptyArrayJson = JSONArray.fromObject(new ArrayList<>());
-        
-//        comment.setTitle("创建第一个此刻");
-//        comment.setStatus(Status.DELETE_NO);
-//        comment.setContent("今天创建第一个此刻");
-//
-//        comment.setUid(1l);
-//        comment.setCreateTime(System.currentTimeMillis());
-//        comment.setUpdateTime(System.currentTimeMillis());
-//        comment.setPublishTime(System.currentTimeMillis());
-//
-//        comment.setPraiseUid(emptyArrayJson.toString());
-//        comment.setCollectionUid(emptyArrayJson.toString());
+        comment.setContent("这是一个很不错的平台");
+        comment.setCreateTime(System.currentTimeMillis());
+        comment.setPid(Constant.COMMENT_ROOT_PID);
+        comment.setStatus(DeleteStatus.NO);
+        comment.setTargetId(1l);
+        comment.setTargetType(CommentTargetType.MOMENT);
+        comment.setOperateType(CommentOperateType.COMMENT);
         return comment;
     }
 }    

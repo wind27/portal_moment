@@ -27,8 +27,7 @@
         </property>
     </bean>
     <context:annotation-config/>
-    <context:component-scan base-package="com.demai.solr.controller"/>
-    <context:component-scan base-package="com.demai.admin.controller"/>
+    <context:component-scan base-package="com.wind.controller"/>
     <!-- 把标记了@Controller注解的类转换为bean -->
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
     </bean>
@@ -50,16 +49,17 @@
 
 
 	<!-- http 请求拦截器 -->
-	<mvc:interceptors>
+	<!-- <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 
          	<mvc:exclude-mapping path="/static/**"/>
          	<mvc:exclude-mapping path="/resources/**"/>
          	<mvc:exclude-mapping path="/do_not_delete/**"/>
-			<bean id="loggedInterceptor" class="com.demai.filter.LoggedInterceptor">
+			<bean id="loggedInterceptor" class="com.wind.filter.LoggedInterceptor">
 				<property name="whiteList">
 					<list>
+						<value>/</value>
 						<value>/admin</value>
 						<value>/admin/userInfo/</value>
 						<value>/admin/ip/</value>
@@ -69,7 +69,7 @@
 				</property>
 			</bean>
 		</mvc:interceptor>
-    </mvc:interceptors>
+    </mvc:interceptors> -->
 
     <mvc:annotation-driven>
         <mvc:message-converters>

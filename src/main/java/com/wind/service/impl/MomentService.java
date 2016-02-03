@@ -35,7 +35,7 @@ public class MomentService implements IMomentService {
     }
 
     @Override
-    public Moment add(Moment moment) {
+    public Moment create(Moment moment) {
         return momentDao.insert(moment);
     }
 
