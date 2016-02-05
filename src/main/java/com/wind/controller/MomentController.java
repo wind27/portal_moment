@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.HTMLDocument.HTMLReader.ParagraphAction;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +15,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.wind.commons.Constant;
 import com.wind.commons.Constant.MetaCode;
 import com.wind.commons.Constant.MetaMsg;
+import com.wind.commons.Constant.RequestStatus;
 import com.wind.commons.Meta;
+import com.wind.commons.StringUtils;
 import com.wind.entity.Moment;
 import com.wind.entity.User;
 import com.wind.service.IMomentService;
 import com.wind.service.IUserService;
+import com.wind.utils.ParamsUtil;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/moment")
@@ -42,7 +51,7 @@ public class MomentController {
     }
     
     //---------------------------------------------------------------
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/my", method = RequestMethod.GET)
     @ResponseBody
     public Object list(HttpServletRequest request) {
         long uid = Long.parseLong(request.getParameter("uid"));
@@ -84,6 +93,32 @@ public class MomentController {
         return resultObject;
     }
     
+    /**
+     * 分頁查詢所有的moment
+     * 
+     * @author qianchun  @date 2016年2月3日 下午7:07:05
+     * @param request
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Object findPageList(HttpServletRequest request) {
+       
+        
+        
+        Map<String, Object> params = new HashMap<String, Object>();
+        
+        params.put("uid", 1);
+        List<Moment> momentList = momentService.findList(params);
+        JSONArray array = JSONArray.fromObject(momentList);
+        System.out.println(array);
+
+        
+        PageBounds pager = new PageBounds(1, 3);
+        PageList<Moment> momentPageList= (PageList<Moment>) momentService.findPageList(null, pager);
+        return momentPageList;
+    }
     //--------------------------------------------------------------------------------------------------
     public List<Map<String, Object>> moment2MapAll(List<Moment> momentList, Map<Long, User> userMap) {
         List<Map<String, Object>> momentMapList = new ArrayList<>();

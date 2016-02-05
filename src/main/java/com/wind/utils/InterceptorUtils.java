@@ -14,9 +14,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wind.commons.Constant;
-import com.wind.commons.Constant.RequestStatus;
+import com.wind.commons.Meta;
 import com.wind.entity.vo.RequestParam;
+
+import net.sf.json.JSONObject;
 
 public class InterceptorUtils {
     private static final Logger logger = LoggerFactory.getLogger(InterceptorUtils.class);
@@ -161,34 +162,34 @@ public class InterceptorUtils {
      * @return
      * @throws IOException
      */
-    public static String getResponseStatus(String ecode, String emsg) {
-        Map<String, Object> resultObject = new HashMap<String, Object>();
-        Map<String, Object> msg = new HashMap<String, Object>();
-        msg.put("code", ecode);
-        msg.put("message", emsg);
-
-        resultObject.put("msg", msg);
-        resultObject.put("success", Constant.Success.FALSE);
-        String responseResultJson = JsonUtil.toJson(resultObject);
-        return responseResultJson;
-    }
+//    public static String getResponseStatus(String ecode, String emsg) {
+//        Map<String, Object> resultObject = new HashMap<String, Object>();
+//        Map<String, Object> msg = new HashMap<String, Object>();
+//        msg.put("code", ecode);
+//        msg.put("message", emsg);
+//
+//        resultObject.put("msg", msg);
+//        resultObject.put("success", Success.FALSE);
+//        String responseResultJson = JsonUtil.toJson(resultObject);
+//        return responseResultJson;
+//    }
     
     /**
      * 设置异常返回结果
      * 
-     * @author qianchun @date 2015年11月30日 下午5:36:32
-     * @param ecode
-     * @param emsg
+     * @author qianchun  @date 2016年2月4日 下午6:48:28
+     * @param meta
      * @param response
      * @return
      * @throws IOException
      */
-    public static String setResponse(String message, HttpServletResponse response)
+    public static String setResponse(Meta meta, HttpServletResponse response)
             throws IOException {
+        String msg = JSONObject.fromObject(meta).toString();
         response.setHeader("Content-type", "text/html;charset=UTF-8");
-        response.getWriter().write(message);
+        response.getWriter().write(msg);
         response.flushBuffer();
-        return message;
+        return msg;
     }
     
     /**
@@ -196,17 +197,17 @@ public class InterceptorUtils {
      * @return
      * @throws IOException
      */
-    public static String getSuccessJson()
-            throws IOException {
-        Map<String, Object> resultObject = new HashMap<String, Object>();
-        Map<String, Object> msg = new HashMap<String, Object>();
-        msg.put("code", RequestStatus.SUCCESS_CODE);
-        msg.put("message", RequestStatus.SUCCESS_MSG);
-
-        resultObject.put("msg", msg);
-        resultObject.put("success", Constant.Success.FALSE);
-        return JsonUtil.toJson(resultObject);
-    }
+//    public static String getSuccessJson()
+//            throws IOException {
+//        Map<String, Object> resultObject = new HashMap<String, Object>();
+//        Map<String, Object> msg = new HashMap<String, Object>();
+//        msg.put("code", RequestStatus.SUCCESS_CODE);
+//        msg.put("message", RequestStatus.SUCCESS_MSG);
+//
+//        resultObject.put("msg", msg);
+//        resultObject.put("success", Constant.Success.FALSE);
+//        return JsonUtil.toJson(resultObject);
+//    }
     
     /**
      * 检查是否属于白名单

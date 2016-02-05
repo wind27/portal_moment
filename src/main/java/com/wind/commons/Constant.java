@@ -16,17 +16,15 @@ public class Constant {
      * @date 2015年11月19日 上午11:06:45
      */
     public class RequestStatus {
-        public static final String SUCCESS_CODE = "0";
-        public static final String PARAMS_ERROR_CODE = "1001";
-        public static final String SYSTEM_ERROR_CODE = "1002";
-        public static final String GROUP_MSG_NO_CODE = "1004";
-        public static final String SYSTEM_NOT_LOGIN_CODE = "1005";
-        public static final String SYSTEM_USER_NO_RIGHT_CODE = "1006";
+        public static final int SUCCESS_CODE = 1000;
+        public static final int PARAMS_ERROR_CODE = 1001;
+        public static final int SYSTEM_ERROR_CODE = 1002;
+        public static final int SYSTEM_NOT_LOGIN_CODE = 1005;
+        public static final int SYSTEM_USER_NO_RIGHT_CODE = 1006;
 
-        public static final String SUCCESS_MSG = "成功";
+        public static final String SUCCESS_MSG = "请求成功";
         public static final String PARAMS_ERROR_MSG = "参数不正确";
         public static final String SYSTEM_ERROR_MSG = "系统错误";
-        public static final String GROUP_MSG_NO_MSG = "目前没有群聊信息";
         public static final String SYSTEM_NOT_LOGIN_MSG = "请先登录";
         public static final String SYSTEM_USER_NO_RIGHT_MSG = "该用户没权限";
     }
@@ -145,6 +143,8 @@ public class Constant {
     }
     
     public static final int COMMENT_ROOT_PID = 0;
+    
+    public static final int LIMIT_50 = 0;
     
     //耗时日志模板
     public static final String LOG_UID_URL_DESC_COSTTIME = "用户uid:{}; 请求url:{}; 接口描述:{}; 耗时{}毫秒";

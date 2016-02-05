@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.wind.commons.DataSourceSwitch;
 import com.wind.dao.IMomentDao;
 import com.wind.entity.Moment;
@@ -52,5 +53,9 @@ public class MomentService implements IMomentService {
 
     public List<Moment> findList(Map<String, Object> params) {
         return momentDao.findList(params);
+    }
+    
+    public List<Moment> findPageList(Map<String, Object> params, PageBounds pager) {
+        return momentDao.findPageList(params, pager);
     }
 }

@@ -20,5 +20,4 @@
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
     <util:properties id="settings" location="classpath*:server.properties"/>
-
 </beans>

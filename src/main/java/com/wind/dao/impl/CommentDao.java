@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.wind.dao.ICommentDao;
 import com.wind.entity.Comment;
 
-@Service
+//@Service
 public class CommentDao extends BaseDao<Comment, Long> implements ICommentDao {
     public Comment insert(Comment comment) {
         comment = super.insert(comment);

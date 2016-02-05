@@ -21,7 +21,7 @@ import com.wind.service.ICommentService;
  * @author qianchun
  * @date 2016年1月29日 下午4:02:23
  */
-@Service
+//@Service
 public class CommentService implements ICommentService {
     
     public CommentService() {

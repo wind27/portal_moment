@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.wind.commons.SysContext;
 import com.wind.dao.IBaseDao;
 
@@ -80,6 +81,10 @@ public abstract class BaseDao<T, PK> implements IBaseDao<T, PK> {
      */
     public List<T> findList(String mapperId, Map<String, Object> params) {
         return sqlSession.selectList(String.format("%s.%s", nameSpace, mapperId), params);
+    }
+    
+    public List<T> findPageList(String mapperId, Map<String, Object> params, PageBounds pager) {
+        return sqlSession.selectList(String.format("%s.%s", nameSpace, mapperId), params, pager);
     }
     
     /**

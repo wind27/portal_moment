@@ -115,4 +115,19 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="findPageList" parameterType="map" resultMap="momentMap">
+		select 
+			id,					title, 				content, 			uid, 			
+		 	create_time, 		update_time, 		publish_time, 		praise_uid, 	
+		 	collection_uid, 	status,				view_num
+	 	from 
+	 		moment 
+		<where>
+			<if test="uids != null">
+				id in
+				<foreach collection="uids" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+			</if>
+		</where>
+	</select>
 </mapper>

@@ -21,7 +21,7 @@ import net.sf.json.JSONArray;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:target/classes/applicationContext*.xml"})
-public class MomentController {
+public class MomentControllerTest {
     @Resource
     IMomentService momentService;
     

@@ -3,6 +3,8 @@ package com.wind.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+
 /**
  * 基础DAO接口
  * 
@@ -34,8 +36,6 @@ public interface IBaseDao<T, PK> {
    */
   T insert(T t);
 
-  
-
   /**
    * 查询符合条件的纪录总条数
    * 
@@ -46,4 +46,6 @@ public interface IBaseDao<T, PK> {
   
   
   List<T> findList(String mapperId, Map<String, Object> params);
+  
+  List<T> findPageList(String mapperId, Map<String, Object> params, PageBounds pager);
 }

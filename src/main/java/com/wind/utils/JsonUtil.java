@@ -8,13 +8,12 @@ import com.wind.entity.vo.RequestParam;
 import net.sf.json.JSONObject;
 
 /**
- * gson解析工具
+ * json 解析工具
  * 
  * @author qianchun
  * @date 2015年8月18日 上午9:57:35
  */
 public final class JsonUtil {
-
     private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
     public static String toJson(Object obj) {
@@ -31,7 +30,6 @@ public final class JsonUtil {
     public static Object toObject(String json, Class<?> clazz) {
         try {
             JSONObject jsonObject = JSONObject.fromObject(json);
-
             return (RequestParam) jsonObject.toBean(jsonObject, clazz);
         }
         catch (Exception e) {

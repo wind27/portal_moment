@@ -10,7 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.wind.commons.Constant.RequestStatus;
+import com.wind.commons.Meta;
 import com.wind.utils.InterceptorUtils;
+import com.wind.utils.LoggerUtil;
+import com.wind.utils.ParamsUtil;
 
 /**
  * 用户登录拦截器
@@ -36,6 +40,22 @@ public class LoggedInterceptor extends HandlerInterceptorAdapter {
             
             if(InterceptorUtils.checkIsInWhiteList(request, whiteList) == true) {
                 return true;
+            }
+            int flag = ParamsUtil.validate(request);
+            if(flag==RequestStatus.PARAMS_ERROR_CODE) {
+                Meta meta = new Meta(
+                        RequestStatus.PARAMS_ERROR_CODE, 
+                        RequestStatus.PARAMS_ERROR_MSG);
+                String responseJson = InterceptorUtils.setResponse(meta, response);
+                LoggerUtil.printRequestLog(request, url, 0, responseJson);
+                return false;
+            } else if(flag==RequestStatus.PARAMS_ERROR_CODE) {
+                Meta meta = new Meta(
+                        RequestStatus.SYSTEM_NOT_LOGIN_CODE, 
+                        RequestStatus.SYSTEM_NOT_LOGIN_MSG);
+                String responseJson = InterceptorUtils.setResponse(meta, response);
+                System.out.println(responseJson);
+                return false;
             }
         }
         return false;
