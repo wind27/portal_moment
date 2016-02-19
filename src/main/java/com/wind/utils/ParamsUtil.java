@@ -4,9 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.wind.commons.Constant;
-import com.wind.commons.Constant.RequestStatus;
+import com.wind.commons.Constant.MetaCode;
 import com.wind.commons.StringUtils;
-import com.wind.entity.vo.RequestParam;
 
 public class ParamsUtil {
     
@@ -78,19 +77,19 @@ public class ParamsUtil {
         String token = getToken(request);
         
         if(uid == 0) {
-            return RequestStatus.PARAMS_ERROR_CODE;
+            return MetaCode.ERROR_PARAMS;
         }
         if(StringUtils.isBlank(uname)) {
-            return RequestStatus.PARAMS_ERROR_CODE;
+            return MetaCode.ERROR_PARAMS;
         }
         if(StringUtils.isBlank(token)) {
-            return RequestStatus.PARAMS_ERROR_CODE;
+            return MetaCode.ERROR_PARAMS;
         }
         
         
         //token 校验：redis校验 + 数据库校验
 //        return RequestStatus.SYSTEM_NOT_LOGIN_CODE;
-        return RequestStatus.SUCCESS_CODE;
+        return MetaCode.SUCCESS;
     }
     
 }

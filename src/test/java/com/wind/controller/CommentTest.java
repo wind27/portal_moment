@@ -22,7 +22,7 @@ import com.wind.service.IMomentService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:target/classes/applicationContext*.xml"})
-public class CommentController {
+public class CommentTest {
     @Resource
     ICommentService commentService;
     

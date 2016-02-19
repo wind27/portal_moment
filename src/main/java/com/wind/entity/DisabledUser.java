@@ -12,12 +12,12 @@ import java.util.Date;
 public class DisabledUser implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    public long id;
-    public long uid;//被操作人id
-    public long operatorId;//操作人id
-    public int type;//操作类型：0、禁用；1、启用
-    public String reason;//操作原因
-    public Date createTime;//操作时间
+    private long id;
+    private long uid;//被操作人id
+    private long operatorId;//操作人id
+    private int type;//操作类型：0、禁用；1、启用
+    private String reason;//操作原因
+    private Date createTime;//操作时间
     
     public long getId() {
         return id;

@@ -11,15 +11,15 @@ import java.io.Serializable;
 public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public long id;//主键ID
-    public long targetId;//评论对象
-    public int targetType;//评论类型
-    public String content;//评论内容
-    public long pid;//父ID
-    public int operateType;//操作类型：1、评论；2、回复；3、转发
-    public long targetUid;//目标用户uid
-    public int status;//状态：0、删除；1、正常
-    public long createTime;//发布评论时间
+    private long id;//主键ID
+    private long targetId;//评论对象
+    private int targetType;//评论类型
+    private String content;//评论内容
+    private long pid;//父ID
+    private int operateType;//操作类型：1、评论；2、回复；3、转发
+    private long targetUid;//目标用户uid
+    private int status;//状态：0、删除；1、正常
+    private long createTime;//发布评论时间
     
     public long getId() {
         return id;

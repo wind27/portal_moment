@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2016-02-18 18:31:14
+Date: 2016-02-19 19:07:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -62,6 +62,41 @@ CREATE TABLE `moment` (
 INSERT INTO `moment` VALUES ('1', '创建第一个此刻', '编辑第一个此刻', '1', '1454319055092', '1454396094936', '1454319055092', '[]', '[]', null, '1');
 
 -- ----------------------------
+-- Table structure for relation
+-- ----------------------------
+DROP TABLE IF EXISTS `relation`;
+CREATE TABLE `relation` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) DEFAULT NULL COMMENT '用户uid',
+  `target_uid` bigint(20) DEFAULT NULL COMMENT '目标用户uid',
+  `type` tinyint(4) DEFAULT '0' COMMENT '0、没有任何关系;1、uid 关注 target_uid;2、target_uid关注uid;3、双向关注；-1、uid 拉黑 target_uid;-2、target_uid拉黑uid;-3、互相拉黑',
+  `focus` tinyint(4) DEFAULT '0' COMMENT '0、非特别关注;1、特别关注',
+  `create_time` bigint(20) DEFAULT NULL,
+  `update_time` bigint(20) DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for token
+-- ----------------------------
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE `token` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) DEFAULT NULL COMMENT '用户uid',
+  `login_name` varchar(255) DEFAULT '' COMMENT '登录用户名',
+  `app_token` varchar(255) DEFAULT '' COMMENT 'app 登录 token',
+  `pc_token` varchar(255) DEFAULT NULL COMMENT 'pc 登录 token',
+  `login_type` tinyint(4) DEFAULT '1' COMMENT '登录用户类型：1、email；',
+  `time` bigint(20) DEFAULT NULL COMMENT '登录时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of token
+-- ----------------------------
+INSERT INTO `token` VALUES ('1', '1001', 'qianchun27@hotmail.com', '2222', '1111', '1', '1455868540488');
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -86,9 +121,10 @@ CREATE TABLE `user` (
   `update_time` bigint(20) DEFAULT NULL,
   `last_login_time` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1001', '钱春', '游风', '2016', '', '1', '18301633814', 'qianchun27@hotmail.com', '0', '1', '18301633814', 'xxxx', '陕西', '咸阳市', '秦都区', '0', '2016', '2016', '2016');
+INSERT INTO `user` VALUES ('1002', '张跃雨', 'Hobart', '1455876148152', '', '0', '13512341234', 'zhangyueyu@hotmail.com', '0', '1', '13512341234', 'xxxx', '河南', '濮阳市', 'xx区', '1', '1455876148152', '1455876148152', '1455876148152');

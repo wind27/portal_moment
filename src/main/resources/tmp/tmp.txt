@@ -1,0 +1,17 @@
+relation {
+	uid:用户uid
+	target_uid:目标用户uid
+	type:关系类型：
+		0、没有任何关系
+		1、uid 关注 target_uid
+		2、target_uid关注uid
+		3、双向关注；
+		-1、uid 拉黑 target_uid
+		-2、target_uid拉黑uid
+		-3、互相拉黑
+	focus:是否特别关注
+		0、非特别关注
+		1、特别关注
+	create_time:创建时间
+	update_time:修改时间
+}

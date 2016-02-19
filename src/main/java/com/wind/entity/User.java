@@ -11,31 +11,38 @@ import java.io.Serializable;
 public class User implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    public long id;
-    public String name;
-    public String nick;
-    public String headImage;
-    public String email;
-    public String mobile;
-    public String tel;
-    public int sex;
-    public int age;
-    public int single;
-    public long birth;
-    public String address ;
-    public String province ;
-    public String city ;
-    public String county;
-    public int status;
-    public long registerTime;
-    public long updateTime;
-    public long lastLoginTime;
+    private long id;
+    private String pwd;
+    private String name;
+    private String nick;
+    private String headImage;
+    private String email;
+    private String mobile;
+    private String tel;
+    private int sex;
+    private int age;
+    private int single;
+    private long birth;
+    private String address ;
+    private String province ;
+    private String city ;
+    private String county;
+    private int status;
+    private long registerTime;
+    private long updateTime;
+    private long lastLoginTime;
     
     public long getId() {
         return id;
     }
     public void setId(long id) {
         this.id = id;
+    }
+    public String getPwd() {
+        return pwd;
+    }
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
     public String getName() {
         return name;

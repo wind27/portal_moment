@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.wind.commons.Constant.RequestStatus;
+import com.wind.commons.Constant.MetaCode;
+import com.wind.commons.Constant.MetaMsg;
 import com.wind.commons.Meta;
 import com.wind.utils.InterceptorUtils;
 import com.wind.utils.LoggerUtil;
@@ -42,17 +43,17 @@ public class LoggedInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
             int flag = ParamsUtil.validate(request);
-            if(flag==RequestStatus.PARAMS_ERROR_CODE) {
+            if(flag==MetaCode.ERROR_PARAMS) {
                 Meta meta = new Meta(
-                        RequestStatus.PARAMS_ERROR_CODE, 
-                        RequestStatus.PARAMS_ERROR_MSG);
+                        MetaCode.ERROR_PARAMS, 
+                        MetaMsg.ERROR_PARAMS);
                 String responseJson = InterceptorUtils.setResponse(meta, response);
                 LoggerUtil.printRequestLog(request, url, 0, responseJson);
                 return false;
-            } else if(flag==RequestStatus.PARAMS_ERROR_CODE) {
+            } else if(flag==MetaCode.NOT_LOGIN) {
                 Meta meta = new Meta(
-                        RequestStatus.SYSTEM_NOT_LOGIN_CODE, 
-                        RequestStatus.SYSTEM_NOT_LOGIN_MSG);
+                        MetaCode.NOT_LOGIN, 
+                        MetaMsg.NOT_LOGIN);
                 String responseJson = InterceptorUtils.setResponse(meta, response);
                 System.out.println(responseJson);
                 return false;

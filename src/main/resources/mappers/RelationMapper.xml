@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wind.entity.Relation">
+	<resultMap id="relationMap" type="com.wind.entity.Relation">
+		<id column="id" property="id" jdbcType="BIGINT" />
+	 	<result column="uid" property="uid" jdbcType="BIGINT" />
+        <result column="target_uid" property="targetUid" jdbcType="BIGINT" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="focus" property="focus" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+		<result column="update_time" property="updateTime" jdbcType="BIGINT" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.wind.entity.Relation"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into relation 
+			(uid,target_uid,type,focus, create_time, update_time) 
+  		values 
+  			(#{uid},#{targetUid},#{type},#{focus},#{createTime}, #{updateTime})
+	</insert>
+	
+	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
+		<selectKey resultType="long" keyProperty="id" order="AFTER">  
+        	SELECT  
+        	LAST_INSERT_ID()  
+    	</selectKey> 
+    	
+		insert into relation 
+			(uid,target_uid,type,focus, create_time, update_time) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+  			(#{item.uid},#{item.targetUid},#{item.type},#{item.focus},#{item.createTime}, #{item.updateTime})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.wind.entity.Relation">
+		update relation 
+		<set>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="focus != null">
+				focus = #{focus},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+		</set>
+		where 
+		<choose>
+			<when test="id != null">
+				id = #{id}
+			</when>
+			<when test="uid != null and targetUid != null">
+				uid = #{uid} and target_uid = #{targetUid}
+			</when>
+		</choose>
+	</update>
+
+	<update id="updateByParams" parameterType="map">
+		update relation 
+		<set>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="focus != null">
+				focus = #{focus},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+		</set>
+		where 
+		<choose>
+			<when test="id != null">
+				id = #{id}
+			</when>
+			<when test="uid != null and targetUid != null">
+				uid = #{uid} and target_uid = #{targetUid}
+			</when>
+		</choose>
+	</update>
+ 
+	<select id="findByUid" parameterType="map" resultMap="relationMap">
+		select 
+			id,uid,target_uid,type,focus, create_time, update_time
+		from 
+			relation 
+		where 
+			uid = #{uid} 
+		limit 1
+	</select>
+	<select id="findByTargetUid" parameterType="map" resultMap="relationMap">
+		select 
+			id,uid,target_uid,type,focus, create_time, update_time
+		from 
+			relation 
+		where 
+			target_uid = #{targetUid} 
+		limit 1
+	</select>
+	<select id="findByUidAndTargetUid" parameterType="map" resultMap="relationMap">
+		select 
+			id,uid,target_uid,type,focus, create_time, update_time
+		from 
+			relation 
+		where 
+			target_uid = #{targetUid} and uid = #{uid}
+		limit 1
+	</select>
+</mapper>

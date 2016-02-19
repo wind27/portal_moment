@@ -35,6 +35,15 @@ public interface IBaseDao<T, PK> {
    * @param t
    */
   T insert(T t);
+  
+  /**
+   * 批量新增
+   * 
+   * @author qianchun  @date 2016年2月19日 下午6:47:52
+   * @param t
+   * @return
+   */
+  boolean batchInsert(List<T> t);
 
   /**
    * 查询符合条件的纪录总条数

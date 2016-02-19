@@ -10,26 +10,6 @@ package com.wind.commons;
 public class Constant {
 
     /**
-     * 请求状态
-     * 
-     * @author qianchun
-     * @date 2015年11月19日 上午11:06:45
-     */
-    public class RequestStatus {
-        public static final int SUCCESS_CODE = 1000;
-        public static final int PARAMS_ERROR_CODE = 1001;
-        public static final int SYSTEM_ERROR_CODE = 1002;
-        public static final int SYSTEM_NOT_LOGIN_CODE = 1005;
-        public static final int SYSTEM_USER_NO_RIGHT_CODE = 1006;
-
-        public static final String SUCCESS_MSG = "请求成功";
-        public static final String PARAMS_ERROR_MSG = "参数不正确";
-        public static final String SYSTEM_ERROR_MSG = "系统错误";
-        public static final String SYSTEM_NOT_LOGIN_MSG = "请先登录";
-        public static final String SYSTEM_USER_NO_RIGHT_MSG = "该用户没权限";
-    }
-
-    /**
      * redis缓存时间（单位秒）
      * 
      * @author qianchun
@@ -65,14 +45,21 @@ public class Constant {
      * @date 2016年1月25日 下午4:53:31
      */
     public class MetaCode {
-        public static final int FALSE = 0;
-        public static final int TRUE = 1;
+        public static final int SUCCESS = 1000;
+        public static final int FAIL = 1001;
+        public static final int ERROR_SYSTEM = 1002;
+        public static final int ERROR_PARAMS = 1003;
+        public static final int NOT_LOGIN = 1004;
+        public static final int NO_RIGHT = 1005;
     }
     
     public class MetaMsg {
         public static final String SUCCESS = "请求成功";
         public static final String FAIL = "请求失败";
-        public static final String ERROR = "请求异常";
+        public static final String ERROR_SYSTEM = "系统错误";
+        public static final String ERROR_PARAMS = "参数不正确";
+        public static final String NOT_LOGIN = "请先登录";
+        public static final String NO_RIGHT = "该用户没权限";
     }
     
     /**
@@ -140,6 +127,27 @@ public class Constant {
         public static final int COMMENT = 1;
         public static final int REPLY = 2;
         public static final int REPOST = 3;
+    }
+    
+    public class LoginType {
+        public static final int EMAIL = 1;
+        public static final int MOBILE = 2;
+    }
+    
+    public class RelationType {
+        public static final int NO_RELATION = 0;//没关系
+        public static final int FRIEND_TO = 1;//关注
+        public static final int FRIEND_BY = 2;//被关注
+        public static final int FRIEND_EACH = 3;//互相关注
+        public static final int DEFRIEND_TO = -1;//拉黑
+        public static final int DEFRIEND_BY = -2;//被拉黑
+        public static final int DEFRIEND_EACH = -3;//互相拉黑
+        
+    }
+    
+    public class RelationFocus {
+        public static final int YES = 1;//特别关注
+        public static final int NO = 0;//非特别关注
     }
     
     public static final int COMMENT_ROOT_PID = 0;

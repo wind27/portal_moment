@@ -11,17 +11,17 @@ import java.io.Serializable;
 public class Moment implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public long id;
-    public String title;//标题
-    public String content;//内容
-    public long uid;//发布人uid
-    public long createTime;//创建时间
-    public long updateTime;//修改时间
-    public long publishTime;//发布时间
-    public String praiseUid;//点赞用户
-    public String collectionUid;//收藏用户
-    public int viewNum;//浏览数
-    public int status;//状态：0、删除；1、正常
+    private long id;
+    private String title;//标题
+    private String content;//内容
+    private long uid;//发布人uid
+    private long createTime;//创建时间
+    private long updateTime;//修改时间
+    private long publishTime;//发布时间
+    private String praiseUid;//点赞用户
+    private String collectionUid;//收藏用户
+    private int viewNum;//浏览数
+    private int status;//状态：0、删除；1、正常
     
     public long getId() {
         return id;

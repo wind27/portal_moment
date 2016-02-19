@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.HTMLDocument.HTMLReader.ParagraphAction;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,17 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import com.wind.commons.Constant;
 import com.wind.commons.Constant.MetaCode;
 import com.wind.commons.Constant.MetaMsg;
-import com.wind.commons.Constant.RequestStatus;
 import com.wind.commons.Meta;
-import com.wind.commons.StringUtils;
 import com.wind.entity.Moment;
 import com.wind.entity.User;
 import com.wind.service.IMomentService;
 import com.wind.service.IUserService;
-import com.wind.utils.ParamsUtil;
 
 import net.sf.json.JSONArray;
 
@@ -39,7 +34,7 @@ public class MomentController {
     @Resource
     IUserService userService;
     
-    //---------------------------------------------------------------
+    //---------------------------- 页面跳转 -----------------------------------
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
         return new ModelAndView("moment/list");
@@ -50,7 +45,7 @@ public class MomentController {
         return new ModelAndView("moment/detail");
     }
     
-    //---------------------------------------------------------------
+    //---------------------------- 获取数据 -----------------------------------
     @RequestMapping(value = "/my", method = RequestMethod.GET)
     @ResponseBody
     public Object list(HttpServletRequest request) {
@@ -88,7 +83,7 @@ public class MomentController {
         }
         
         //封装返回数据
-        resultObject.put("meta", new Meta(MetaCode.TRUE, MetaMsg.SUCCESS));
+        resultObject.put("meta", new Meta(MetaCode.SUCCESS, MetaMsg.SUCCESS));
         resultObject.put("data", momentMapList);
         return resultObject;
     }
@@ -100,13 +95,9 @@ public class MomentController {
      * @param request
      * @return
      */
-    @SuppressWarnings("unchecked")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public Object findPageList(HttpServletRequest request) {
-       
-        
-        
         Map<String, Object> params = new HashMap<String, Object>();
         
         params.put("uid", 1);
@@ -119,7 +110,7 @@ public class MomentController {
         PageList<Moment> momentPageList= (PageList<Moment>) momentService.findPageList(null, pager);
         return momentPageList;
     }
-    //--------------------------------------------------------------------------------------------------
+  //---------------------------- 结果封装map -----------------------------------
     public List<Map<String, Object>> moment2MapAll(List<Moment> momentList, Map<Long, User> userMap) {
         List<Map<String, Object>> momentMapList = new ArrayList<>();
         if(momentList!=null) {

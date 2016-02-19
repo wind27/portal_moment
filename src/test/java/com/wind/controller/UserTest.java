@@ -23,7 +23,7 @@ import net.sf.json.JSONObject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:target/classes/applicationContext*.xml"})
-public class UserController {
+public class UserTest {
     @Resource
     IUserService userService;
     
@@ -80,7 +80,9 @@ public class UserController {
         boolean flag = false;
         List<User> userList = null;
         
-//        user = add(user);
+        user = add(user);
+        String result1 = JSONObject.fromObject(user).toString();
+        System.out.println(result1);
 //        user = findById(1l);
 //        flag = disable(1l);
 //        flag = enable(1l);
@@ -90,18 +92,18 @@ public class UserController {
     
     public User createUser() {
         User user = new User();
-        user.setName("钱春");
-        user.setNick("游风");
-        user.setEmail("qianchun27@hotmail.com");
-        user.setMobile("18301633814");
-        user.setTel("18301633814");
+        user.setName("张跃雨");
+        user.setNick("Hobart");
+        user.setEmail("zhangyueyu@hotmail.com");
+        user.setMobile("13512341234");
+        user.setTel("13512341234");
         user.setHeadImage("");
-        user.setProvince("陕西");
-        user.setCity("咸阳市");
-        user.setCounty("秦都区");
+        user.setProvince("河南");
+        user.setCity("濮阳市");
+        user.setCounty("xx区");
         user.setAddress("xxxx");
         user.setSex(Sex.MALE);
-        user.setSingle(Single.TRUE);
+        user.setSingle(Single.FALSE);
         user.setStatus(UserStatus.ENABLE);
         user.setBirth(System.currentTimeMillis());
         user.setUpdateTime(System.currentTimeMillis());

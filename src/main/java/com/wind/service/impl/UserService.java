@@ -46,6 +46,11 @@ public class UserService implements IUserService {
         return userDao.update(params);
     }
 
+    @Override
+    public boolean update(Map<String, Object> params) {
+        return userDao.update(params);
+    }
+    
     public List<User> findList(Map<String, Object> params) {
         return userDao.findList(params);
     }

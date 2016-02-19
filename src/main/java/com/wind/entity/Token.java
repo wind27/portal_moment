@@ -11,10 +11,13 @@ import java.io.Serializable;
 public class Token implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public long id;
-    public long uid;//用户id
-    public String appToken;//app token
-    public String pcToken;//pc token
+    private long id;
+    private long uid;//登录用户uid
+    private String loginName;//登录用户名
+    private String appToken;//app 登录 token
+    private String pcToken;//pc 登录 token
+    private long time;//登录时间
+    private int loginType;//登录方式
     
     public long getId() {
         return id;
@@ -39,5 +42,23 @@ public class Token implements Serializable {
     }
     public void setPcToken(String pcToken) {
         this.pcToken = pcToken;
+    }
+    public long getTime() {
+        return time;
+    }
+    public void setTime(long time) {
+        this.time = time;
+    }
+    public int getLoginType() {
+        return loginType;
+    }
+    public void setLoginType(int loginType) {
+        this.loginType = loginType;
+    }
+    public String getLoginName() {
+        return loginName;
+    }
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 }

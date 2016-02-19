@@ -60,6 +60,16 @@ public abstract class BaseDao<T, PK> implements IBaseDao<T, PK> {
         return t;
     }
     
+    @Override
+    public boolean batchInsert(List<T> t) {
+        int result = sqlSession.insert(String.format("%s.batchInsert", nameSpace), t);
+        if(result > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     /**
      * 执行按照对象的更新操作
      *
