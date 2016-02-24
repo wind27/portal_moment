@@ -51,6 +51,9 @@ public class Constant {
         public static final int ERROR_PARAMS = 1003;
         public static final int NOT_LOGIN = 1004;
         public static final int NO_RIGHT = 1005;
+        
+        public static final int USERNAME_PASSWORD_WRONG = 1100;
+        public static final int USER_DISABLE = 1101;
     }
     
     public class MetaMsg {
@@ -60,6 +63,9 @@ public class Constant {
         public static final String ERROR_PARAMS = "参数不正确";
         public static final String NOT_LOGIN = "请先登录";
         public static final String NO_RIGHT = "该用户没权限";
+        
+        public static final String USERNAME_PASSWORD_WRONG = "用户名或密码错误";
+        public static final String USER_DISABLE = "该用户已经停用";
     }
     
     /**

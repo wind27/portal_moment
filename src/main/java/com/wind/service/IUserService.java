@@ -14,10 +14,12 @@ import com.wind.entity.User;
  */
 public interface IUserService {
     public User findById(long id);
-    public User add(User user);
+    public User findByEmail(String email);
+    public List<User> findList(Map<String, Object> params);
+    public Map<Long, User> findMap(Map<String, Object> params);
+
     public boolean updateStatus(long id, int status);
     public boolean update(Map<String, Object> params);
     
-    public List<User> findList(Map<String, Object> params);
-    public Map<Long, User> findMap(Map<String, Object> params);
+    public User add(User user);
 }

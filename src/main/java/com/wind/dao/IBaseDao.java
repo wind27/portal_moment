@@ -6,55 +6,21 @@ import java.util.Map;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 /**
- * 基础DAO接口
+ * IBaseDao 接口
  * 
- * @author ZhangYanchun
- * @param <T> DTO
- * @param <PK> 主键
+ * @author qianchun
+ * @date 2016年2月24日 下午5:57:13
  */
 public interface IBaseDao<T, PK> {
+    T insert(T t);
+    boolean batchInsert(List<T> t);
 
-  /**
-   * 根据主键删除对象
-   * 
-   * @param pk
-   */
-  boolean deleteById(PK pk);
+    boolean deleteById(PK pk);
 
-  /**
-   * 根据主键查询对象
-   * 
-   * @param pk
-   * @return
-   */
-  T findById(PK pk);
+    boolean update(T t);
 
-  /**
-   * 保存对象
-   * 
-   * @param t
-   */
-  T insert(T t);
-  
-  /**
-   * 批量新增
-   * 
-   * @author qianchun  @date 2016年2月19日 下午6:47:52
-   * @param t
-   * @return
-   */
-  boolean batchInsert(List<T> t);
-
-  /**
-   * 查询符合条件的纪录总条数
-   * 
-   * @param params
-   * @return
-   */
-  boolean update(T t);
-  
-  
-  List<T> findList(String mapperId, Map<String, Object> params);
-  
-  List<T> findPageList(String mapperId, Map<String, Object> params, PageBounds pager);
+    T findById(PK pk);
+    T findOne(String mapperId, Map<String, Object> params);
+    List<T> findList(String mapperId, Map<String, Object> params);
+    List<T> findPageList(String mapperId, Map<String, Object> params, PageBounds pager);
 }

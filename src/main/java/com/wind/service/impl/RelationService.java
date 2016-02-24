@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.wind.commons.DataSourceSwitch;
 import com.wind.dao.IRelationDao;
 import com.wind.entity.Relation;
-import com.wind.entity.Token;
+import com.wind.exception.RollBackException;
 import com.wind.service.IRelationService;
 
 /**
@@ -29,10 +29,10 @@ public class RelationService implements IRelationService {
     @Resource
     IRelationDao relationDao;
 
-    @Override
-    public Relation add(Relation relation) {
-        return relationDao.insert(relation);
-    }
+//    @Override
+//    public Relation add(Relation relation) {
+//        return relationDao.insert(relation);
+//    }
 
     @Override
     public List<Relation> findByUid(long uid) {
@@ -62,5 +62,24 @@ public class RelationService implements IRelationService {
     @Override
     public boolean batchAdd(List<Relation> relationList) {
         return relationDao.batchAdd(relationList);
+    }
+
+    @Override
+    public boolean batchUpdate(List<Relation> relationList) {
+        boolean flag = true;
+        if(relationList==null || relationList.size()!=2) {
+            return false;
+        }
+        for(int i=0; i<relationList.size(); i++) {
+            Relation r = relationList.get(i);
+            if(r!=null) {
+                flag = relationDao.update(r);
+            }
+            if(flag == false) {
+                new RollBackException("添加关注异常，事务回滚！！！");
+                return false;
+            }
+        }
+        return flag;
     }
 }

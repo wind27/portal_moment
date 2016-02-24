@@ -15,7 +15,7 @@ import com.wind.entity.User;
 import com.wind.service.IUserService;
 
 /**
- * UserService 实现
+ * IUserService 实现
  * 
  * @author qianchun
  * @date 2016年1月29日 下午4:02:23
@@ -67,5 +67,10 @@ public class UserService implements IUserService {
             }
         }
         return userMap;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 }

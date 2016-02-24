@@ -123,6 +123,17 @@
 	 	where id = #{id}
 	</select>
 
+	<select id="findByEmail" parameterType="map" resultMap="userMap">
+		 select 
+		 	id,name, nick, head_image, email, mobile, 
+			tel, sex, age, single, birth, address, 
+			province, city, county,status, 
+			register_time, update_time, last_login_time
+		 from 
+		 	user 
+	 	where email = #{email}
+	</select>
+
 	<select id="findByParam" parameterType="map" resultMap="userMap">
 		select 
 			id,name, nick, head_image, email, mobile, 

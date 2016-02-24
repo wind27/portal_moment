@@ -76,11 +76,12 @@ public class UserTest {
     }
     @Test
     public void main() {
-        User user = createUser();
-        boolean flag = false;
-        List<User> userList = null;
-        
-        user = add(user);
+//        User user = createUser();
+//        boolean flag = false;
+//        List<User> userList = null;
+//        
+//        user = add(user);
+        User user = userService.findByEmail("qianchun27@hotmail.com");
         String result1 = JSONObject.fromObject(user).toString();
         System.out.println(result1);
 //        user = findById(1l);

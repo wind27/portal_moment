@@ -22,40 +22,8 @@ import com.wind.service.IUserService;
 public class UserController {
     @Resource
     IUserService userService;
-    
-    //---------------------------- 获取数据 -----------------------------------
-    /**
-     * 新增用户
-     * 
-     * @author qianchun  @date 2016年2月19日 下午12:14:47
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Object add(HttpServletRequest request) {
-        Map<String, Object> resultObject = new HashMap<>();
-        String name = request.getParameter("name");
-        String pwd = request.getParameter("pwd");
-        String email = request.getParameter("email");
-        
-        User user = new User();
-        user.setName(name);
-        user.setPwd(pwd);
-        user.setEmail(email);
-        try {
-            user = userService.add(user);
-        }
-        catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_SYSTEM, MetaMsg.ERROR_SYSTEM));
-        }
-        if(user!=null) {
-            resultObject.put("meta", new Meta(MetaCode.SUCCESS, MetaMsg.SUCCESS));
-        } else {
-            resultObject.put("meta", new Meta(MetaCode.FAIL, MetaMsg.FAIL));
-        }
-        return resultObject;
-    }
-    
+    //---------------------------- 页面跳转 -----------------------------------
+    //---------------------------- 数据处理 -----------------------------------
     /**
      * 更新用户状态
      * 

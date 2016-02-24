@@ -1,5 +1,6 @@
 package com.wind.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,5 +30,12 @@ public class UserDao extends BaseDao<User, Long> implements IUserDao {
     
     public List<User> findList(Map<String, Object> params) {
         return (List<User>) super.findList("findByParam", params);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("email", email);
+        return (User) super.findOne("findByEmail", params);
     }
 }

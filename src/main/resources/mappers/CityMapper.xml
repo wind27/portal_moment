@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wind.entity.City">
+	<resultMap id="cityMap" type="com.wind.entity.City">
+		<id column="id" property="id" jdbcType="BIGINT" />
+	 	<result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="findAll" resultMap="cityMap">
+		select id, code, name, province_code from city
+	</select>
+</mapper>

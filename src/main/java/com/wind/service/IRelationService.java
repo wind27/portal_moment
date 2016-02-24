@@ -13,8 +13,9 @@ import com.wind.entity.Relation;
  * @date 2016年2月19日 下午2:59:10
  */
 public interface IRelationService {
-    public Relation add(Relation relation);
+//    public Relation add(Relation relation);
     public boolean batchAdd(List<Relation> relationList);
+    public boolean batchUpdate(List<Relation> relationList);
     
     public List<Relation> findByUid(long uid);
     public List<Relation> findByTargetUid(long targetUid);

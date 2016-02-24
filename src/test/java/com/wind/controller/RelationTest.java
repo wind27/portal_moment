@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.poi.ss.formula.eval.RelationalOperationEval;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,25 +30,14 @@ public class RelationTest {
     IUserService userService;
     
     
-    /**
-     * 添加用户
-     * 
-     * @author qianchun  @date 2016年2月1日 下午3:42:16
-     */
-    public Relation create(Relation relation) {
-        return relationService.add(relation);
-    }
-    
-    public boolean updateByParams(Map<String, Object> params) {
-        return relationService.updateByParams(params);
-    }
-    public List<Relation> findByUid(long id) {
-        return relationService.findByUid(id);
-    }
-    
     @Test
     public void main() {
-        boolean flag = create(1001, 1002);
+        boolean flag = false;
+//        flag = payAttention(1001, 1002);
+//        flag = payAttention(1002, 1001);
+        flag = cancelAttention(1001, 1002);
+//        flag = cancelAttention(1002, 1001);
+        
         
         Relation relation = relationService.findByUidAndTargetUid(1001, 1002);
         Relation relationTarget = relationService.findByUidAndTargetUid(1002, 1001);
@@ -68,33 +58,88 @@ public class RelationTest {
 //        System.out.println(result3);
     }
     
-//        
-//        Relation relationTmp = relationService.findByUidAndTargetUid(uid, targetUid);
-//        Relation targetRelationTmp = relationService.findByUidAndTargetUid(targetUid, uid);
-
-    public boolean create(long uid, long targetUid) {
+    /**
+     * 关注
+     * 
+     * @author qianchun  @date 2016年2月24日 下午3:21:22
+     * @param uid
+     * @param targetUid
+     * @return
+     */
+    public boolean payAttention(long uid, long targetUid) {
+        Relation relation = relationService.findByUidAndTargetUid(uid, targetUid);
+        Relation target = relationService.findByUidAndTargetUid(targetUid, uid);
+        
         List<Relation> relationList = new ArrayList<>();
-        
-        Relation relation = new Relation();
-        relation.setUid(uid);
-        relation.setType(RelationType.FRIEND_TO);
-        relation.setTargetUid(targetUid);
-        relation.setFocus(RelationFocus.NO);
-        relation.setCreateTime(System.currentTimeMillis());
-        relation.setUpdateTime(System.currentTimeMillis());
-        relationService.add(relation);
-        relationList.add(relation);
+        if(relation==null && target==null) {
+            relation = new Relation();
+            relation.setUid(uid);
+            relation.setType(RelationType.FRIEND_TO);
+            relation.setTargetUid(targetUid);
+            relation.setFocus(RelationFocus.NO);
+            relation.setCreateTime(System.currentTimeMillis());
+            relation.setUpdateTime(System.currentTimeMillis());
+            relationList.add(relation);
+
+            target = new Relation();
+            target.setUid(targetUid);
+            target.setType(RelationType.FRIEND_BY);
+            target.setTargetUid(uid);
+            target.setFocus(RelationFocus.NO);
+            target.setCreateTime(System.currentTimeMillis());
+            target.setUpdateTime(System.currentTimeMillis());
+            relationList.add(target);
+            return relationService.batchAdd(relationList);
+        } else if(relation!=null && target!=null 
+                && relation.getType()==RelationType.FRIEND_BY 
+                && target.getType()==RelationType.FRIEND_TO) {
+            target.setType(RelationType.FRIEND_EACH);
+            relation.setType(RelationType.FRIEND_EACH);
+            relationList.add(target);
+            relationList.add(relation);
+            return relationService.batchUpdate(relationList);
+        } else if(relation!=null && target!=null 
+                && relation.getType()==RelationType.NO_RELATION 
+                && target.getType()==RelationType.NO_RELATION) {
+            target.setType(RelationType.FRIEND_BY);
+            relation.setType(RelationType.FRIEND_TO);
+            relationList.add(target);
+            relationList.add(relation);
+            return relationService.batchUpdate(relationList);
+        }
+        return false;
+    }
     
-        Relation relationTarget = new Relation();
-        relationTarget.setUid(targetUid);
-        relationTarget.setType(RelationType.FRIEND_BY);
-        relationTarget.setTargetUid(uid);
-        relationTarget.setFocus(RelationFocus.NO);
-        relationTarget.setCreateTime(System.currentTimeMillis());
-        relationTarget.setUpdateTime(System.currentTimeMillis());
-        relationService.add(relationTarget);
-        relationList.add(relationTarget);
+    /**
+     * 取消关注
+     * 
+     * @author qianchun  @date 2016年2月24日 下午4:59:05
+     * @param uid
+     * @param targetUid
+     * @return
+     */
+    public boolean cancelAttention(long uid, long targetUid) {
+        Relation relation = relationService.findByUidAndTargetUid(uid, targetUid);
+        Relation target = relationService.findByUidAndTargetUid(targetUid, uid);
+        List<Relation> relationList = new ArrayList<Relation>();
         
-        return relationService.batchAdd(relationList);
+        if(relation!=null && target!=null 
+                && relation.getType()==RelationType.FRIEND_TO 
+                && target.getType()==RelationType.FRIEND_BY) {
+            relation.setType(RelationType.NO_RELATION);
+            target.setType(RelationType.NO_RELATION);
+            relationList.add(target);
+            relationList.add(relation);
+            return relationService.batchUpdate(relationList);
+        } else if(relation!=null && target!=null 
+                && relation.getType()==RelationType.FRIEND_EACH 
+                && target.getType()==RelationType.FRIEND_EACH) {
+            relation.setType(RelationType.FRIEND_BY);
+            target.setType(RelationType.FRIEND_TO);
+            relationList.add(target);
+            relationList.add(relation);
+            return relationService.batchUpdate(relationList);
+        }
+        return true;
     }
 }    
