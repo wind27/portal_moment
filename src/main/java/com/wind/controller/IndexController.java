@@ -12,8 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
     
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView visitAllFeedForPage(HttpServletRequest request) {
-        return new ModelAndView("moment/list");
+    public String visitAllFeedForPage(HttpServletRequest request) {
+        return "/index";
     }
     
 }
