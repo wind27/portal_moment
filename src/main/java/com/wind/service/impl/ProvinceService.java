@@ -12,10 +12,10 @@ import com.wind.entity.Province;
 import com.wind.service.IProvinceService;
 
 /**
- * TokenService 实现
+ * IProvinceService 接口实现
  * 
  * @author qianchun
- * @date 2016年2月19日 下午2:59:33
+ * @date 2016年2月25日 上午11:24:59
  */
 @Service
 public class ProvinceService implements IProvinceService {
