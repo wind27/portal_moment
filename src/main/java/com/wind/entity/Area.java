@@ -12,7 +12,7 @@ public class Area implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long id;//主键id
-    private long code;//市 code
+    private String code;//市 code
     private String name;//名称
     private String cityCode;//市 code
     private String provinceCode;//省 code
@@ -23,10 +23,10 @@ public class Area implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    public long getCode() {
+    public String getCode() {
         return code;
     }
-    public void setCode(long code) {
+    public void setCode(String code) {
         this.code = code;
     }
     public String getName() {

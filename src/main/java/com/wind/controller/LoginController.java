@@ -18,6 +18,8 @@ import com.wind.commons.Constant.UserStatus;
 import com.wind.entity.User;
 import com.wind.service.IUserService;
 
+import net.sf.json.JSONObject;
+
 @Controller
 @RequestMapping("/")
 public class LoginController {
@@ -56,7 +58,8 @@ public class LoginController {
         } else {
             resultObject.put("meta", new Meta(MetaCode.FAIL, MetaMsg.FAIL));
         }
-        return resultObject;
+        
+        return JSONObject.fromObject(resultObject).toString();
     }
     
     /**

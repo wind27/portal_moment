@@ -12,7 +12,7 @@ public class Province implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long id;//主键id
-    private long code;//省 code
+    private String code;//省 code
     private String name;//名称
     
     public long getId() {
@@ -21,10 +21,10 @@ public class Province implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    public long getCode() {
+    public String getCode() {
         return code;
     }
-    public void setCode(long code) {
+    public void setCode(String code) {
         this.code = code;
     }
     public String getName() {

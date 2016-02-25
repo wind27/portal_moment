@@ -1,6 +1,7 @@
 package com.wind.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 城市
@@ -12,10 +13,9 @@ public class City implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long id;//主键id
-    private long code;//市 code
+    private String code;//市 code
     private String name;//名称
     private String provinceCode;//省 code
-    
     
     public long getId() {
         return id;
@@ -23,10 +23,10 @@ public class City implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    public long getCode() {
+    public String getCode() {
         return code;
     }
-    public void setCode(long code) {
+    public void setCode(String code) {
         this.code = code;
     }
     public String getName() {
