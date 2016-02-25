@@ -32,8 +32,7 @@
 				'pwd' : pwd,
 				'email' : email
 			},
-			contentType: "application/json; charset=utf-8",
-			dataType : "json",
+			dataType : "text",
 			success : function(result) {
 				alert(result);
 				console.log(result);

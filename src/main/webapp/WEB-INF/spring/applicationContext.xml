@@ -17,19 +17,11 @@
     <context:property-placeholder location="classpath*:*.properties" ignore-unresolvable="true"/>
     <context:annotation-config/>
     
-	<context:component-scan base-package="com.wind">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
+	<!-- <context:component-scan base-package="com.wind">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan> -->
     
-    <!-- <context:component-scan base-package="com"/> -->
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
-    
-	<bean class="com.wind.listener.CommonDataCacheListener">  
-	    <property name="areaService" ref="areaService"></property>
-	    <property name="cityService" ref="cityService"></property>
-	    <property name="provinceService" ref="provinceService"></property>
-	</bean>  
     
     <util:properties id="settings" location="classpath*:server.properties"/>
 </beans>

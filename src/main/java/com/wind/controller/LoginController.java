@@ -9,16 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.wind.commons.Meta;
 import com.wind.commons.Constant.MetaCode;
 import com.wind.commons.Constant.MetaMsg;
 import com.wind.commons.Constant.UserStatus;
+import com.wind.commons.Meta;
 import com.wind.entity.User;
 import com.wind.service.IUserService;
-
-import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/")
@@ -32,6 +31,7 @@ public class LoginController {
         return new ModelAndView("/login");
     }
     //---------------------------- 数据处理 -----------------------------------
+    @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object login(HttpServletRequest request) {
         Map<String, Object> resultObject = new HashMap<>();
@@ -59,7 +59,7 @@ public class LoginController {
             resultObject.put("meta", new Meta(MetaCode.FAIL, MetaMsg.FAIL));
         }
         
-        return JSONObject.fromObject(resultObject).toString();
+        return resultObject;
     }
     
     /**

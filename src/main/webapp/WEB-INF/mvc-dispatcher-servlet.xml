@@ -32,10 +32,15 @@
         </property>
     </bean>
     <context:annotation-config/>
-    <context:component-scan base-package="com.wind.controller"/>
+    <context:component-scan base-package="com.wind"/>
+	
     <!-- 把标记了@Controller注解的类转换为bean -->
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-    </bean>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"></bean>
+    <bean class="com.wind.listener.CommonDataCacheListener">  
+	    <property name="areaService" ref="areaService"></property>
+	    <property name="cityService" ref="cityService"></property>
+	    <property name="provinceService" ref="provinceService"></property>
+	</bean> 
 
 
     <bean id="multipartResolver"

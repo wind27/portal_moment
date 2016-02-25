@@ -1,0 +1,21 @@
+#Ô²ÐÎÍ·Ïñ
+.circular_img{
+	margin:10px 5px;
+	overflow:hidden;
+}
+.circular_img figure div{
+	display:inline-block;
+	margin:5px auto;
+	width:100px;
+	height:100px;
+	border-radius:100px;
+	border:2px solid #fff;
+	overflow:hidden;
+	-webkit-box-shadow:0 0 3px #ccc;
+	box-shadow:0 0 3px #ccc;
+}
+.circular_img img{
+	width:100%;
+	min-height:100%; 
+	text-align:center;
+}

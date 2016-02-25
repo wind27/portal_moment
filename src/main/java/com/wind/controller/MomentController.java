@@ -37,12 +37,12 @@ public class MomentController {
     //---------------------------- 页面跳转 -----------------------------------
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
-        return new ModelAndView("moment/list");
+        return new ModelAndView("/moment/index");
     }
     
     @RequestMapping(value = "/detail",method = RequestMethod.GET)
     public ModelAndView detail(HttpServletRequest request) {
-        return new ModelAndView("moment/detail");
+    	return new ModelAndView("/moment/detail");
     }
     
     //---------------------------- 获取数据 -----------------------------------
