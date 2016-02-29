@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wind.entity.vo.RequestParam;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -21,21 +22,29 @@ public final class JsonUtil {
             return JSONObject.fromObject(obj).toString();
         }
         catch (Exception e) {
-            logger.info("请求参数解析异常", e);
+            logger.error("JsonUtil : 解析 JSON 异常 : " + obj, e);
             return null;
         }
     }
 
     @SuppressWarnings("static-access")
-    public static Object toObject(String json, Class<?> clazz) {
+    public static Object toObject(String str, Class<?> clazz) {
         try {
-            JSONObject jsonObject = JSONObject.fromObject(json);
+            JSONObject jsonObject = JSONObject.fromObject(str);
             return (RequestParam) jsonObject.toBean(jsonObject, clazz);
         }
         catch (Exception e) {
-            e.printStackTrace();
-            logger.error("解析参数异常：" + json);
+            logger.error("JsonUtil : 解析 "+clazz.getName()+" 异常 : " + str, e);
             return null;
+        }
+    }
+    public static JSONArray toJSONArray(String str) {
+        try {
+            return JSONArray.fromObject(str);
+        }
+        catch (Exception e) {
+            logger.error("JsonUtil : 解析 JSONArray 异常 : " + str, e);
+            return new JSONArray();
         }
     }
 }

@@ -79,7 +79,7 @@
 				publish_time = #{publishTime},
 			</if>
 			<if test="praiseUid != null">
-				praise_uid = #{praise_uid},
+				praise_uid = #{praiseUid},
 			</if>
 			<if test="collectionUid != null">
 				collection_uid = #{collectionUid},

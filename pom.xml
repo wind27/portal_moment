@@ -170,7 +170,7 @@
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
-			<version>3.0.3</version>
+			<version>3.2.2</version>
 		</dependency>
 
 		<!-- connection pool -->
@@ -308,9 +308,9 @@
 			<version>1.7.5</version>
 		</dependency>
 		<dependency>
-    		<groupId>com.qiniu</groupId>
-    		<artifactId>qiniu-java-sdk</artifactId>
-    		<version>[7.0.0, 7.0.99]</version>
+			<groupId>com.qiniu</groupId>
+			<artifactId>qiniu-java-sdk</artifactId>
+			<version>[7.0.0, 7.0.99]</version>
 		</dependency>
 		<!-- rabbitMq -->
 		<dependency>
