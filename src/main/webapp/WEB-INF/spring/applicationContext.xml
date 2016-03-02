@@ -12,14 +12,17 @@
 		http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<bean id="user" name="user" class="com.wind.entity.User"></bean >  
+	<bean id="mongoClient" name="mongoClient" class="com.mongodb.MongoClient">
+		<constructor-arg index="0" value="192.168.217.128" />
+		<constructor-arg index="1" value="27017" />
+	</bean >  
 
     <context:property-placeholder location="classpath*:*.properties" ignore-unresolvable="true"/>
     <context:annotation-config/>
     
-	<!-- <context:component-scan base-package="com.wind">
+	<context:component-scan base-package="com.wind">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-	</context:component-scan> -->
+	</context:component-scan>
     
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
     
