@@ -12,16 +12,10 @@
 		http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<bean id="user" name="user" class="com.wind.entity.User"></bean >  
-
     <context:property-placeholder location="classpath*:*.properties" ignore-unresolvable="true"/>
     <context:annotation-config/>
-    
-	<!-- <context:component-scan base-package="com.wind">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-	</context:component-scan> -->
-    
+    <context:component-scan base-package="com.wind"/>
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
-    
+
     <util:properties id="settings" location="classpath*:server.properties"/>
 </beans>
