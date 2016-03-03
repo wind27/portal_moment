@@ -1,79 +1,99 @@
 package com.wind.mongo.service;
 
+import java.util.List;
+import java.util.Map;
 
-import java.util.ArrayList;
+import javax.annotation.Resource;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.springframework.stereotype.Service;
 
 import com.mongodb.client.MongoCollection;
-import com.wind.commons.Constant.DeleteStatus;
+import com.wind.dao.impl.MomentDao;
 import com.wind.entity.Moment;
+import com.wind.mongo.doc.utils.DocumentMongoUtil;
 import com.wind.utils.MongodbUtil;
 
-import net.sf.json.JSONArray;
-
+@Service
 public class MomentMongoService {
-//	@Resource
+	@Resource
 	MongodbUtil momentdbUtil;
 	
-	MongoCollection<Document> coll = null;
-	
-//	FindIterable<Document> cur = coll.find();
-//	coll.insertOne(document);
-//	while (cur.iterator().hasNext()) {
-//		Document doc = cur.iterator().next();
-//		long id = doc.getLong("id");
-//		System.out.println(id);
-//	}
-//	String result = net.sf.json.JSONArray.fromObject(coll).toString();
-//	System.out.println(result);
-	
-	public MomentMongoService() {
-		momentdbUtil = new MongodbUtil();
-		this.coll = momentdbUtil.getMongoCollection("wind", "moment");
+	/**
+	 * 获取连接
+	 * 
+	 * @author qianchun  @date 2016年3月3日 下午2:20:49
+	 * @return
+	 */
+	public MongoCollection<Document> getColl() {
+		return momentdbUtil.getMongoCollection("wind", "moment");
+	}
+	//-----------------------------------------------------------
+	/**
+	 * 查询
+	 * 
+	 * @author qianchun  @date 2016年3月3日 下午2:21:06
+	 * @param params
+	 * @return
+	 */
+	public List<Moment> find(Map<String, Object> params) {
+		MongoCollection<Document> coll = getColl();
+		List<Document> docList = momentdbUtil.find(coll, params);
+		if(docList==null || docList.size()==0) {
+			return null;
+		}
+		List<Moment> momentList = DocumentMongoUtil.doc2Moment(docList);
+		return momentList;
 	}
 	
-	public void create(Moment moment) {
-		Document doc  = new Document();
-		doc.put("collection_uid", moment.getCollectionUid());
-		doc.put("content", moment.getContent());
-		doc.put("create_time", moment.getCreateTime());
-		doc.put("id", moment.getId());
-		doc.put("praise_uid", moment.getPraiseUid());
-		doc.put("publish_time", moment.getPublishTime());
-		doc.put("status", moment.getStatus());
-		doc.put("title", moment.getTitle());
-		doc.put("uid", moment.getUid());
-		doc.put("update_time", moment.getUpdateTime());
-		doc.put("view_num", moment.getViewNum());
-		
-		coll.insertOne(doc);
+	/**
+	 *  插入
+	 * 
+	 * @author qianchun  @date 2016年3月3日 下午2:20:25
+	 * @param moment
+	 * @return
+	 */
+	public boolean create(Moment moment) {
+		MongoCollection<Document> coll = getColl();
+		Document doc = DocumentMongoUtil.moment2Document(moment);
+		if(doc==null) {
+			return false;
+		}
+		return momentdbUtil.insert(coll, doc);
 	}
-	
-	public static Moment createMoment() {
-        Moment moment = new Moment();
-        JSONArray emptyArrayJson = JSONArray.fromObject(new ArrayList<>());
-        
-        moment.setId(1l);
-        moment.setTitle("创建第一个此刻");
-        moment.setStatus(DeleteStatus.NO);
-        moment.setContent("今天创建第一个此刻");
 
-        moment.setUid(1l);
-        moment.setCreateTime(System.currentTimeMillis());
-        moment.setUpdateTime(System.currentTimeMillis());
-        moment.setPublishTime(System.currentTimeMillis());
-
-        moment.setPraiseUid(emptyArrayJson.toString());
-        moment.setCollectionUid(emptyArrayJson.toString());
-        return moment;
-    }
-	
-	public static void main(String[] args) {
-		MomentMongoService momentMongoService = new MomentMongoService();
-		Moment moment = createMoment();
-		momentMongoService.create(moment);
-		
-		
+	/**
+	 *  批量插入
+	 * 
+	 * @author qianchun  @date 2016年3月3日 下午2:20:25
+	 * @param moment
+	 * @return
+	 */
+	public boolean batchCreate(List<Moment> momentList) {
+		MongoCollection<Document> coll = getColl();
+		List<Document> docList = DocumentMongoUtil.moment2Document(momentList);
+		if(docList==null || docList.size()==0) {
+			return false;
+		}
+		return momentdbUtil.batchInsert(coll, docList);
 	}
+	
+	/**
+	 * 更新
+	 * 
+	 * @author qianchun  @date 2016年3月3日 下午2:32:23
+	 * @param params
+	 * @return
+	 */
+	public Moment update(Bson filter, Document document) {
+		MongoCollection<Document> coll = getColl();
+		coll.findOneAndUpdate(filter, document);
+		if(filter==null || document==null) {
+			return null;
+		}
+		document = momentdbUtil.update(coll, filter, document);
+		return null;
+	}
+	//-----------------------------------------------------------
 }
