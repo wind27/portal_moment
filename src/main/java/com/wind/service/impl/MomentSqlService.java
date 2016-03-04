@@ -12,7 +12,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.wind.commons.DataSourceSwitch;
 import com.wind.dao.IMomentDao;
 import com.wind.entity.Moment;
-import com.wind.service.IMomentService;
+import com.wind.service.IMomentSqlService;
 
 /**
  * UserService 实现
@@ -21,9 +21,9 @@ import com.wind.service.IMomentService;
  * @date 2016年1月29日 下午4:02:23
  */
 @Service
-public class MomentService implements IMomentService {
+public class MomentSqlService implements IMomentSqlService {
     
-    public MomentService() {
+    public MomentSqlService() {
         DataSourceSwitch.setDataSourceType("userDataSource");
     }
     

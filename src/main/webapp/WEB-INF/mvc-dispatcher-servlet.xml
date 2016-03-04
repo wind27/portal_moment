@@ -40,6 +40,7 @@
 	    <property name="areaService" ref="areaService"></property>
 	    <property name="cityService" ref="cityService"></property>
 	    <property name="provinceService" ref="provinceService"></property>
+	    <property name="idsService" ref="idsService"></property>
 	</bean> 
 
 

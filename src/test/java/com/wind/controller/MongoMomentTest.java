@@ -18,9 +18,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.wind.commons.Constant.DeleteStatus;
+import com.wind.commons.ServiceResult;
 import com.wind.entity.Moment;
 import com.wind.mongo.doc.utils.DocumentMongoUtil;
-import com.wind.mongo.service.MomentMongoService;
+import com.wind.mongo.service.MomentService;
 
 import net.sf.json.JSONArray;
 
@@ -28,7 +29,7 @@ import net.sf.json.JSONArray;
 @ContextConfiguration(locations={"file:target/classes/applicationContext*.xml"})
 public class MongoMomentTest {
     @Resource
-    MomentMongoService momentMongoService;
+    MomentService momentService;
     
     @Test
     public void main() {
@@ -51,12 +52,21 @@ public class MongoMomentTest {
 //    	Document document = DocumentMongoUtil.moment2Document(moment2);
 //    	momentMongoService.replace(filter, document);
     	
-    	List<Moment> momentList = createMomentList(10);
-    	Boolean flag= momentMongoService.batchCreate(momentList);
-    	if(flag==false) {
-    		System.out.println("批量插入失败");
-    	} else {
-    		System.out.println("批量插入成功");
+//    	List<Moment> momentList = createMomentList(10);
+//    	ServiceResult serviceResult= momentService.batchCreate(momentList);
+//    	if(serviceResult.isSuccess()==false) {
+//    		System.out.println("批量插入失败");
+//    	} else {
+//    		System.out.println("批量插入成功");
+//    	}
+    	
+    	int pstart = 10;
+    	int plimit = 100;
+    	List<Long> uidList = new ArrayList<>();
+    	uidList.add(1l);
+    	ServiceResult result = momentService.findByUids(uidList, pstart, plimit);
+    	if(result.isSuccess()) {
+    		System.out.println(JSONArray.fromObject(result.getData()).toString());
     	}
         
 //    	Map<String, Object> params = new HashMap<String, Object>();
@@ -89,7 +99,7 @@ public class MongoMomentTest {
     	for(int i=0; i<size; i++) {
     		Moment moment = new Moment();
     		JSONArray emptyArrayJson = JSONArray.fromObject(new ArrayList<>());
-    		moment.setUid(1l);
+    		moment.setUid(2l);
     		moment.setTitle("创建第"+i+"个此刻");
     		moment.setStatus(DeleteStatus.NO);
     		moment.setContent("今天创建第"+i+"个此刻");

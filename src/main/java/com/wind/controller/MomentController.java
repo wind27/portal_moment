@@ -23,7 +23,7 @@ import com.wind.commons.Meta;
 import com.wind.entity.Moment;
 import com.wind.entity.Param;
 import com.wind.entity.User;
-import com.wind.service.IMomentService;
+import com.wind.service.IMomentSqlService;
 import com.wind.service.IUserService;
 
 import net.sf.json.JSONArray;
@@ -32,7 +32,7 @@ import net.sf.json.JSONArray;
 @RequestMapping("/moment")
 public class MomentController {
     @Resource
-    IMomentService momentService;
+    IMomentSqlService momentSqlService;
     @Resource
     IUserService userService;
     
@@ -63,7 +63,7 @@ public class MomentController {
         List<Long> uids = new ArrayList<Long>();
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("uid", uid);
-        List<Moment> momentList = momentService.findList(params);
+        List<Moment> momentList = momentSqlService.findList(params);
         
         //获取moment中的用户ids
         if(momentList!=null) {
@@ -105,7 +105,7 @@ public class MomentController {
         List<Long> uids = new ArrayList<Long>();
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("uid", uid);
-        List<Moment> momentList = momentService.findList(params);
+        List<Moment> momentList = momentSqlService.findList(params);
         
         //获取moment中的用户ids
         if(momentList!=null) {
@@ -149,13 +149,13 @@ public class MomentController {
         Map<String, Object> params = new HashMap<String, Object>();
         
         params.put("uid", 1);
-        List<Moment> momentList = momentService.findList(params);
+        List<Moment> momentList = momentSqlService.findList(params);
         JSONArray array = JSONArray.fromObject(momentList);
         System.out.println(array);
 
         
         PageBounds pager = new PageBounds(1, 3);
-        PageList<Moment> momentPageList= (PageList<Moment>) momentService.findPageList(null, pager);
+        PageList<Moment> momentPageList= (PageList<Moment>) momentSqlService.findPageList(null, pager);
         return momentPageList;
     }
     
@@ -173,15 +173,15 @@ public class MomentController {
         Map<String, Object> resultObject = new HashMap<>();
         
         if(param==null || param.getUid()==0 || param.getMomentid()==0) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+            resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
             return resultObject;
         }
         long momentId = param.getMomentid();
         boolean flag = true;
         try {
-            Moment moment = momentService.findById(momentId);
+            Moment moment = momentSqlService.findById(momentId);
             if(moment==null) {
-                resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+                resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
                 return resultObject;
             }
             JSONArray collectionUidsJson = JSONArray.fromObject(moment.getCollectionUid());
@@ -193,11 +193,11 @@ public class MomentController {
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("collectionUid", collectionUidsJson.toString());
                 params.put("id", momentId);
-                flag = momentService.update(params);
+                flag = momentSqlService.update(params);
             }
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_SYSTEM, MetaMsg.ERROR_SYSTEM));
+            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
             return resultObject;
         }
         if(flag==true) {
@@ -222,16 +222,16 @@ public class MomentController {
         Map<String, Object> resultObject = new HashMap<>();
         
         if(param==null || param.getUid()==0 || param.getMomentid()==0) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+            resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
             return resultObject;
         }
         long momentId = param.getMomentid();
         long uid = param.getUid();
         boolean flag = true;
         try {
-            Moment moment = momentService.findById(momentId);
+            Moment moment = momentSqlService.findById(momentId);
             if(moment==null) {
-                resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+                resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
                 return resultObject;
             }
             JSONArray praiseUidsJson = JSONArray.fromObject(moment.getPraiseUid());
@@ -243,11 +243,11 @@ public class MomentController {
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("praiseUid", praiseUidsJson.toString());
                 params.put("id", momentId);
-                flag = momentService.update(params);
+                flag = momentSqlService.update(params);
             }
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_SYSTEM, MetaMsg.ERROR_SYSTEM));
+            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
             return resultObject;
         }
         if(flag==true) {
@@ -272,15 +272,15 @@ public class MomentController {
         Map<String, Object> resultObject = new HashMap<>();
         
         if(param==null || param.getUid()==0 || param.getMomentid()==0) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+            resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
             return resultObject;
         }
         long momentId = param.getMomentid();
         boolean flag = true;
         try {
-            Moment moment = momentService.findById(momentId);
+            Moment moment = momentSqlService.findById(momentId);
             if(moment==null) {
-                resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+                resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
                 return resultObject;
             }
             JSONArray collectionUidsJson = JSONArray.fromObject(moment.getCollectionUid());
@@ -289,11 +289,11 @@ public class MomentController {
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("collectionUid", collectionUidsJson.toString());
                 params.put("id", momentId);
-                flag = momentService.update(params);
+                flag = momentSqlService.update(params);
             }
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_SYSTEM, MetaMsg.ERROR_SYSTEM));
+            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
             return resultObject;
         }
         if(flag==true) {
@@ -318,16 +318,16 @@ public class MomentController {
         Map<String, Object> resultObject = new HashMap<>();
         
         if(param==null || param.getUid()==0 || param.getMomentid()==0) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+            resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
             return resultObject;
         }
         long momentId = param.getMomentid();
         long uid = param.getUid();
         boolean flag = true;
         try {
-            Moment moment = momentService.findById(momentId);
+            Moment moment = momentSqlService.findById(momentId);
             if(moment==null) {
-                resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+                resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
                 return resultObject;
             }
             JSONArray praiseUidsJson = JSONArray.fromObject(moment.getPraiseUid());
@@ -336,11 +336,11 @@ public class MomentController {
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("praiseUid", praiseUidsJson.toString());
                 params.put("id", momentId);
-                flag = momentService.update(params);
+                flag = momentSqlService.update(params);
             }
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_SYSTEM, MetaMsg.ERROR_SYSTEM));
+            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
             return resultObject;
         }
         if(flag==true) {

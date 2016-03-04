@@ -13,7 +13,7 @@ import com.wind.entity.Moment;
  * @author qianchun
  * @date 2016年1月29日 下午4:02:47
  */
-public interface IMomentService {
+public interface IMomentSqlService {
     public Moment findById(long id);
     
     public Moment create(Moment moment);

@@ -37,7 +37,7 @@ public class UserController {
         String id = request.getParameter("id");
         String status = request.getParameter("status");
         if(StringUtils.isBlank(id) || StringUtils.isBlank(status)) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+            resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
             return resultObject;
         }
         boolean flag = false;
@@ -45,7 +45,7 @@ public class UserController {
             flag = userService.updateStatus(Long.parseLong(id), Integer.parseInt(status));
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_SYSTEM, MetaMsg.ERROR_SYSTEM));
+            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
         }
         
         if(flag==true) {
@@ -72,7 +72,7 @@ public class UserController {
         String single = request.getParameter("single");
 
         if(StringUtils.isBlank(id)) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_PARAMS, MetaMsg.ERROR_PARAMS));
+            resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
             return resultObject;
         }
         Map<String, Object> params = new HashMap<String, Object>();
@@ -91,7 +91,7 @@ public class UserController {
             flag = userService.update(params);
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_SYSTEM, MetaMsg.ERROR_SYSTEM));
+            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
         }
         if(flag==true) {
             resultObject.put("meta", new Meta(MetaCode.SUCCESS, MetaMsg.SUCCESS));

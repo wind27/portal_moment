@@ -47,8 +47,8 @@ public class Constant {
     public class MetaCode {
         public static final int SUCCESS = 1000;
         public static final int FAIL = 1001;
-        public static final int ERROR_SYSTEM = 1002;
-        public static final int ERROR_PARAMS = 1003;
+        public static final int SYSTEM_ERROR = 1002;
+        public static final int PARAMS_ERROR = 1003;
         public static final int NOT_LOGIN = 1004;
         public static final int NO_RIGHT = 1005;
         
@@ -59,13 +59,21 @@ public class Constant {
     public class MetaMsg {
         public static final String SUCCESS = "请求成功";
         public static final String FAIL = "请求失败";
-        public static final String ERROR_SYSTEM = "系统错误";
-        public static final String ERROR_PARAMS = "参数不正确";
+        public static final String SYSTEM_ERROR = "系统错误";
+        public static final String PARAMS_ERROR = "参数不正确";
         public static final String NOT_LOGIN = "请先登录";
         public static final String NO_RIGHT = "该用户没权限";
         
         public static final String USERNAME_PASSWORD_WRONG = "用户名或密码错误";
         public static final String USER_DISABLE = "该用户已经停用";
+    }
+    
+    public class ServiceMsg {
+    	public static final String SUCCESS = "请求成功";
+    	public static final String FAIL = "请求失败";
+    	public static final String PARAMS_ERROR = "参数不正确";
+    	public static final String SYSTEM_ERROR = "系统错误";
+    	public static final String ID_INCREMENT_ERROR = "主键自增异常";
     }
     
     /**

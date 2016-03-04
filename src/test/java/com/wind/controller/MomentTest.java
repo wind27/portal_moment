@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.wind.commons.Constant;
 import com.wind.commons.Constant.DeleteStatus;
 import com.wind.entity.Moment;
-import com.wind.service.IMomentService;
+import com.wind.service.IMomentSqlService;
 
 import net.sf.json.JSONArray;
 
@@ -23,7 +23,7 @@ import net.sf.json.JSONArray;
 @ContextConfiguration(locations={"file:target/classes/applicationContext*.xml"})
 public class MomentTest {
     @Resource
-    IMomentService momentService;
+    IMomentSqlService momentService;
     
     /**
      * 添加用户

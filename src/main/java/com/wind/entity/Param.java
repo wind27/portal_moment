@@ -25,6 +25,8 @@ public class Param implements Serializable {
     private long momentid;//momenId;
     private long uid;//用户uid
     private List<Long> uids;//用户uid集合
+    private int pstart;
+    private int plimit;
     
     public long getId() {
         return id;
@@ -104,4 +106,16 @@ public class Param implements Serializable {
     public void setUids(List<Long> uids) {
         this.uids = uids;
     }
+	public int getPstart() {
+		return pstart;
+	}
+	public void setPstart(int pstart) {
+		this.pstart = pstart;
+	}
+	public int getPlimit() {
+		return plimit;
+	}
+	public void setPlimit(int plimit) {
+		this.plimit = plimit;
+	}
 }

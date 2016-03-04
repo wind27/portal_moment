@@ -17,7 +17,7 @@ import com.wind.commons.Constant.CommentTargetType;
 import com.wind.commons.Constant.DeleteStatus;
 import com.wind.entity.Comment;
 import com.wind.service.ICommentService;
-import com.wind.service.IMomentService;
+import com.wind.service.IMomentSqlService;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,7 +27,7 @@ public class CommentTest {
     ICommentService commentService;
     
     @Resource
-    IMomentService momentService;
+    IMomentSqlService momentService;
     
     /**
      * 添加用户

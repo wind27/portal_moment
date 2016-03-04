@@ -51,7 +51,7 @@ public class LoginController {
             }
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_SYSTEM, MetaMsg.ERROR_SYSTEM));
+            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
         }
         if(user!=null) {
             resultObject.put("meta", new Meta(MetaCode.SUCCESS, MetaMsg.SUCCESS));
@@ -84,7 +84,7 @@ public class LoginController {
             user = userService.add(user);
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.ERROR_SYSTEM, MetaMsg.ERROR_SYSTEM));
+            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
         }
         if(user!=null) {
             resultObject.put("meta", new Meta(MetaCode.SUCCESS, MetaMsg.SUCCESS));

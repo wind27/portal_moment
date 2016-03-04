@@ -13,9 +13,12 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:property-placeholder location="classpath*:*.properties" ignore-unresolvable="true"/>
+		<!-- <constructor-arg index="0" value="${mongo.url}" />
+		<constructor-arg index="1" value="${mongo.port}" /> -->
 	<bean id="mongoClient" name="mongoClient" class="com.mongodb.MongoClient">
-		<constructor-arg index="0" value="192.168.217.128" />
-		<constructor-arg index="1" value="27017" />
+		 <constructor-arg index="0" value="192.168.217.128" />
+         <constructor-arg index="1" value="27017" />
+		
 	</bean >  
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 

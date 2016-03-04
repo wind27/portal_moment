@@ -6,11 +6,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.bson.BsonDocument;
-import org.bson.BsonInt32;
-import org.bson.BsonString;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +17,14 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.result.UpdateResult;
+import com.wind.mongo.service.IdsService;
 
 import net.sf.json.JSONObject;
 
 @Service
 public class MongodbUtil {
-    private final org.slf4j.Logger logger = LoggerFactory.getLogger(MongodbUtil.class);
+    private final static Logger logger = LoggerFactory.getLogger(MongodbUtil.class);
     
     @Resource
     private MongoClient mongoClient;
@@ -74,21 +72,21 @@ public class MongodbUtil {
     	try {
     		List<Document> momentList = new ArrayList<Document>();
     		Bson bson = null;
-    		Integer skip = 0;
-    		Integer limit = 0;
+    		Integer pstart = 0;
+    		Integer plimit = 0;
     		
     		FindIterable<Document> iterator = null;
-    		if(params!=null && params.get("bson")!=null) {
-    			bson = (Bson) params.get("bson");
+    		if(params!=null && params.get("filter")!=null) {
+    			bson = (Bson) params.get("filter");
     			iterator = coll.find(bson);
     		} else {
     			iterator = coll.find();
     		}
     		
-    		if(params!=null && params.get("skip")!=null && params.get("limit")!=null) {
-    			skip = (Integer) params.get("skip");
-    			limit = (Integer) params.get("limit");
-    			iterator.skip(skip).limit(limit);
+    		if(params!=null && params.get("pstart")!=null && params.get("plimit")!=null) {
+    			pstart = (Integer) params.get("pstart");
+    			plimit = (Integer) params.get("plimit");
+    			iterator.skip(pstart).limit(plimit);
     		}
     		
     		MongoCursor<Document> cursor = iterator.iterator();
@@ -139,18 +137,6 @@ public class MongodbUtil {
     public boolean batchInsert(MongoCollection<Document> coll, List<Document> docList) {
     	if(coll==null) {
     		return false;
-    	}
-    	for(int i=0; i<docList.size(); i++) {
-    		Document doc = docList.get(i);
-    		if(doc==null) {
-    			docList.remove(doc);
-    			i--;
-    		}
-    		long nextIndex = findNextIndex();
-    		if(nextIndex==0) {
-    			return false;
-    		}
-    		doc.put("id", nextIndex);
     	}
     	try {
     		coll.insertMany(docList);
@@ -231,42 +217,6 @@ public class MongodbUtil {
     	} catch (Exception e) {
     		logger.error("批量修改失败！！！", e);
 			return false;
-		}
-    }
-    
-    /**
-     * 获取下一个主键id
-     * 
-     * @author qianchun  @date 2016年3月3日 下午6:35:16
-     * @return
-     */
-    public long findNextIndex() {
-    	MongoCollection<Document> coll = getMongoCollection("wind", "ids");
-    	if(coll==null) {
-    		return 0;
-    	}
-//    	Document doc = new Document();
-//    	doc.put("_id", "moment_id");
-//    	doc.put("seq", 0l);
-//    	coll.insertOne(doc);
-    	
-    	try {
-    		BsonDocument filter = new BsonDocument().append("_id", new BsonString("moment_id"));
-    		
-    		BsonDocument seqBson = new BsonDocument().append("seq", new BsonInt32(1));
-    		BsonDocument document = new BsonDocument().append("$inc", seqBson);
-    		FindOneAndUpdateOptions option = new FindOneAndUpdateOptions();
-    		option.upsert(true);
-    		Document nextIndexDoc = coll.findOneAndUpdate(filter, document, option);
-    		if(nextIndexDoc==null) {
-    			logger.error("获取下一个主键 id失败！！！");
-    			return 0;
-    		}
-    		long nextIndex = nextIndexDoc.getLong("seq");
-    		return nextIndex;
-		} catch (Exception e) {
-			logger.error("获取下一个主键 id异常！！！", e);
-			return 0;
 		}
     }
 }

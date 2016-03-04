@@ -77,13 +77,13 @@ public class ParamsUtil {
         String token = getToken(request);
         
         if(uid == 0) {
-            return MetaCode.ERROR_PARAMS;
+            return MetaCode.PARAMS_ERROR;
         }
         if(StringUtils.isBlank(uname)) {
-            return MetaCode.ERROR_PARAMS;
+            return MetaCode.PARAMS_ERROR;
         }
         if(StringUtils.isBlank(token)) {
-            return MetaCode.ERROR_PARAMS;
+            return MetaCode.PARAMS_ERROR;
         }
         
         

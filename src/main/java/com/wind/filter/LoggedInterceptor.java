@@ -43,10 +43,10 @@ public class LoggedInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
             int flag = ParamsUtil.validate(request);
-            if(flag==MetaCode.ERROR_PARAMS) {
+            if(flag==MetaCode.PARAMS_ERROR) {
                 Meta meta = new Meta(
-                        MetaCode.ERROR_PARAMS, 
-                        MetaMsg.ERROR_PARAMS);
+                        MetaCode.PARAMS_ERROR, 
+                        MetaMsg.PARAMS_ERROR);
                 String responseJson = InterceptorUtils.setResponse(meta, response);
                 LoggerUtil.printRequestLog(request, url, 0, responseJson);
                 return false;
