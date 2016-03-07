@@ -1,72 +1,113 @@
 package com.wind.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.wind.commons.Constant.MetaCode;
+import com.wind.commons.Constant.MetaMsg;
+import com.wind.commons.Meta;
+import com.wind.commons.ServiceResult;
+import com.wind.entity.Moment;
+import com.wind.entity.Param;
+import com.wind.entity.User;
+import com.wind.mongo.service.CommentService;
+import com.wind.mongo.service.MomentService;
+import com.wind.service.IUserService;
 
 @Controller
 @RequestMapping("/moment")
 public class MomentController {
-//    @Resource
-//    IUserService userService;
-//    
-//    //---------------------------- 页面跳转 -----------------------------------
-//    @RequestMapping(value = "/p/all",method = RequestMethod.GET)
-//    public ModelAndView allPage(HttpServletRequest request) {
-//        return new ModelAndView("/moment/all");
-//    }
-//    @RequestMapping(value = "/p/my",method = RequestMethod.GET)
-//    public ModelAndView indexPage(HttpServletRequest request) {
-//        return new ModelAndView("/moment/my");
-//    }
-//    
-//    @RequestMapping(value = "/p/detail",method = RequestMethod.GET)
-//    public ModelAndView detailPage(HttpServletRequest request) {
-//    	return new ModelAndView("/moment/detail");
-//    }
-//    
-//    //---------------------------- 获取数据 -----------------------------------
-//    @RequestMapping(value = "/my", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Object my(Param param, HttpServletRequest request) {
-//        long uid = param.getUid();
-//        Map<String, Object> resultObject = new HashMap<>();
-//        List<Map<String, Object>> momentMapList = new ArrayList<>();
-//        
-//        //根据用户id获取moment
-//        List<Long> uids = new ArrayList<Long>();
-//        Map<String, Object> params = new HashMap<String, Object>();
-//        params.put("uid", uid);
-//        List<Moment> momentList = momentSqlService.findList(params);
-//        
-//        //获取moment中的用户ids
-//        if(momentList!=null) {
-//            for(int i=0; i<momentList.size(); i++) {
-//                Moment moment = momentList.get(i);
-//                if(moment!=null) {
-//                    uids.add(moment.getUid());
-//                }
-//            }
-//        }
-//        
-//        //根据用户ids获取用户信息
-//        Map<Long, User> userMap = null;
-//        if(uids!=null && uids.size()>0) {
-//            params.clear();
-//            params.put("ids", uids);
-//            userMap = userService.findMap(params);
-//        }
-//
-//        //封装map
-//        if(momentList!=null) {
-//            momentMapList = moment2MapList(momentList, userMap);
-//        }
-//        
-//        //封装返回数据
-//        resultObject.put("meta", new Meta(MetaCode.SUCCESS, MetaMsg.SUCCESS));
-//        resultObject.put("data", momentMapList);
-//        return resultObject;
-//    }
-//    
+    @Resource
+    IUserService userService;
+    @Resource
+    MomentService momentService;
+    @Resource
+    CommentService commentService;
+    
+    //---------------------------- 页面跳转 -----------------------------------
+    @RequestMapping(value = "/p/all",method = RequestMethod.GET)
+    public ModelAndView allPage(HttpServletRequest request) {
+        return new ModelAndView("/moment/all");
+    }
+    @RequestMapping(value = "/p/my",method = RequestMethod.GET)
+    public ModelAndView indexPage(HttpServletRequest request) {
+        return new ModelAndView("/moment/my");
+    }
+    
+    @RequestMapping(value = "/p/detail",method = RequestMethod.GET)
+    public ModelAndView detailPage(HttpServletRequest request) {
+    	return new ModelAndView("/moment/detail");
+    }
+    
+    //---------------------------- 获取数据 -----------------------------------
+    /**
+     * 获取我的 moment
+     * 
+     * @author qianchun  @date 2016年3月7日 下午7:31:16
+     * @param param
+     * @param request
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+	@RequestMapping(value = "/my", method = RequestMethod.GET)
+    @ResponseBody
+    public Object my(Param param, HttpServletRequest request) {
+        long uid = param.getUid();
+        Map<String, Object> resultObject = new HashMap<>();
+        List<Map<String, Object>> momentMapList = new ArrayList<>();
+        
+        //根据用户id获取moment
+        List<Long> uids = new ArrayList<Long>();
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("uid", uid);
+        ServiceResult serviceResult = momentService.findByUids(uids, param.getPstart(), param.getPlimit());
+        
+        if(serviceResult.isSuccess()==false) {
+        	resultObject.put("meta", new Meta(MetaCode.FAIL, MetaMsg.FAIL));
+            resultObject.put("data", momentMapList);
+            return resultObject;
+        }
+        List<Moment> momentList = (List<Moment>) serviceResult.getData();
+        //获取moment中的用户ids
+        if(momentList!=null) {
+            for(int i=0; i<momentList.size(); i++) {
+                Moment moment = momentList.get(i);
+                if(moment!=null) {
+                    uids.add(moment.getUid());
+                }
+            }
+        }
+        
+        //根据用户ids获取用户信息
+        Map<Long, User> userMap = null;
+        if(uids!=null && uids.size()>0) {
+            params.clear();
+            params.put("ids", uids);
+            userMap = userService.findMap(params);
+        }
+
+        //封装map
+        if(momentList!=null) {
+            momentMapList = moment2MapList(momentList, userMap);
+        }
+        
+        //封装返回数据
+        resultObject.put("meta", new Meta(MetaCode.SUCCESS, MetaMsg.SUCCESS));
+        resultObject.put("data", momentMapList!=null?momentMapList:new ArrayList<>());
+        return resultObject;
+    }
+    
 //    @RequestMapping(value = "/all", method = RequestMethod.GET)
 //    @ResponseBody
 //    public Object all(Param param, HttpServletRequest request) {
@@ -356,38 +397,38 @@ public class MomentController {
 //        return momentMapList;
 //    }
 //    
-//    public List<Map<String, Object>> moment2MapList(List<Moment> momentList, Map<Long, User> userMap) {
-//        List<Map<String, Object>> momentMapList = new ArrayList<>();
-//        if(momentList!=null) {
-//            for(int i=0; i<momentList.size(); i++) {
-//                Moment moment = momentList.get(i);
-//                if(moment!=null) {
-//                    Map<String, Object> map = new HashMap<>();
-//                    map.put("id", moment.getId());
-//                    map.put("content", moment.getContent());
-//                    
-//                    map.put("view_num", moment.getViewNum());
-//                    map.put("praise_num", moment.getViewNum());
-//                    map.put("collection_num", moment.getViewNum());
-//
-//                    if(userMap!=null && userMap.containsKey(moment.getUid())) {
-//                        User user = userMap.get(moment.getUid());
-//                        map.put("uid", user.getId());
-//                        map.put("uname", user.getName());
-//                        map.put("head_image", user.getHeadImage());
-//                    } else {
-//                        map.put("uid", moment.getUid());
-//                        map.put("uname", "");
-//                        map.put("head_image", "");
-//                    }
-//                    
-//                    map.put("create_time", moment.getCreateTime());
-//                    map.put("update_time", moment.getUpdateTime());
-//                    map.put("publish_time", moment.getPublishTime());
-//                }
-//            }
-//        }
-//        
-//        return momentMapList;
-//    }
+    public List<Map<String, Object>> moment2MapList(List<Moment> momentList, Map<Long, User> userMap) {
+        List<Map<String, Object>> momentMapList = new ArrayList<>();
+        if(momentList!=null) {
+            for(int i=0; i<momentList.size(); i++) {
+                Moment moment = momentList.get(i);
+                if(moment!=null) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("id", moment.getId());
+                    map.put("content", moment.getContent());
+                    
+                    map.put("view_num", moment.getViewNum());
+                    map.put("praise_num", moment.getViewNum());
+                    map.put("collection_num", moment.getViewNum());
+
+                    if(userMap!=null && userMap.containsKey(moment.getUid())) {
+                        User user = userMap.get(moment.getUid());
+                        map.put("uid", user.getId());
+                        map.put("uname", user.getName());
+                        map.put("head_image", user.getHeadImage());
+                    } else {
+                        map.put("uid", moment.getUid());
+                        map.put("uname", "");
+                        map.put("head_image", "");
+                    }
+                    
+                    map.put("create_time", moment.getCreateTime());
+                    map.put("update_time", moment.getUpdateTime());
+                    map.put("publish_time", moment.getPublishTime());
+                }
+            }
+        }
+        
+        return momentMapList;
+    }
 }
