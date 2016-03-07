@@ -105,8 +105,13 @@ public class Constant {
      * @date 2016年2月2日 下午12:05:10
      */
     public class DeleteStatus {
-        public static final int YES = 0;
-        public static final int NO = 1;
+        public static final int ENABLE = 0;
+        public static final int DISABLE = 1;
+    }
+    
+    public class IsDelete {
+        public static final int YES = 1;
+        public static final int NO = 0;
     }
     
     /**
@@ -133,6 +138,7 @@ public class Constant {
     
     /**
      * 回复操作类型
+     * 1、评论；2、回复；3、转发
      * 
      * @author qianchun
      * @date 2016年2月2日 下午12:04:08
@@ -167,6 +173,13 @@ public class Constant {
     public static final int COMMENT_ROOT_PID = 0;
     
     public static final int LIMIT_50 = 0;
+    
+    public class MongoSort {
+    	public static final int DESC = -1;
+    	public static final int ASC = 1;
+    }
+    
+    public static final int TREE_ROOT_ID = 0;
     
     //耗时日志模板
     public static final String LOG_UID_URL_DESC_COSTTIME = "用户uid:{}; 请求url:{}; 接口描述:{}; 耗时{}毫秒";
