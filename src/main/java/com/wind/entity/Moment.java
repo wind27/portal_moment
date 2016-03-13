@@ -14,6 +14,7 @@ public class Moment implements Serializable {
     private long id;
     private String title;//标题
     private String content;//内容
+    private String desc;//内容描述
     private long uid;//发布人uid
     private long createTime;//创建时间
     private long updateTime;//修改时间
@@ -41,7 +42,13 @@ public class Moment implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
-    public long getUid() {
+    public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public long getUid() {
         return uid;
     }
     public void setUid(long uid) {
