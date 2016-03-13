@@ -18,53 +18,12 @@
 		margin-bottom: 10px;
 	}
 </style>
+<script type="text/javascript" src="../../../resources/js/moment/add.js"></script>
 <script type="text/javascript">
-
 $(document).ready(function () {
-	init();
-
+	app.moment.init();
 });
-var init = function() {
-	$("#submit").click(function() {
-		var title = $("#title").val();
-		var desc = $("#desc").val();
-		var content = $("#content").val();
-		
-		var data = {
-			"title":title,
-			"content":content,
-			"desc":desc
-		};
-		alert(title+"*"+desc+"*"+content);
-		$.ajax({
-			  type: "POST",
-			  url: ctx + "/moment/add",
-			  data: data,
-			  dataType: "json",
-			  success: function(result) {
-				  if(result.meta.code == 1000) {
-					  alert("添加成功");
-				  } else {
-					  alert("添加失败");
-				  }
-			  }
-		});
-	}); 
-}
-
-/* 	
-	$('#content').xheditor({tools:'mfull', height:300});
- 	$(function () {  
-        $(pageInit);  
-        var editor;  
-        function pageInit() {  
-            editor=$('#content').xheditor({tools:'full',skin:'o2007blue',width:'1240',height:'500',upImgUrl:'upload.asp'});  
-        }  
-    });
-
-*/
-          
-    </script> 
+</script> 
 </head>
 <body>
 <div class="container">
@@ -82,8 +41,9 @@ var init = function() {
 			<textarea id="content" name="content" class="xheditor" style="width: 100%;height: 100%"></textarea>
 		</div>
 		
-		
-		<input id="submit" type="submit" value="提交" />
+		<input id="publish" type="button" value="提交" />
+		<input id="save" type="button" value="保存" />
+		<input id="cannel" type="button" value="取消" />
 		
 	</div>
 </div>

@@ -43,6 +43,7 @@ public class IdsService {
 		ServiceResult result = new ServiceResult();
 		try {
 			boolean momentFlag = false;
+			boolean commentFlag = false;
 			MongoCollection<Document> coll = getColl();
 			if(coll==null) {
 				result.setSuccess(true);
@@ -56,12 +57,21 @@ public class IdsService {
 					if(doc.getString("name").equals("moment")) {
 						momentFlag = true;
 					}
+					if(doc.getString("name").equals("comment")) {
+						commentFlag = true;
+					}
 				}
 			}
 
 			if(!momentFlag) {
 				Document doc = new Document();
 				doc.put("name", "moment");
+				doc.put("next_index", 0l);
+				coll.insertOne(doc);
+			}
+			if(!commentFlag) {
+				Document doc = new Document();
+				doc.put("name", "comment");
 				doc.put("next_index", 0l);
 				coll.insertOne(doc);
 			}

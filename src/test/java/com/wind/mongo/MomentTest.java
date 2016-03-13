@@ -1,4 +1,4 @@
-package com.wind.controller;
+package com.wind.mongo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.wind.commons.Constant.DeleteStatus;
+import com.wind.commons.Constant.IsDelete;
 import com.wind.commons.ServiceResult;
 import com.wind.entity.Moment;
 import com.wind.mongo.doc.utils.DocumentMongoUtil;
@@ -27,7 +28,7 @@ import net.sf.json.JSONArray;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:target/classes/applicationContext*.xml"})
-public class MongoMomentTest {
+public class MomentTest {
     @Resource
     MomentService momentService;
     
@@ -84,7 +85,7 @@ public class MongoMomentTest {
         moment.setUid(1l);
         moment.setId(1l);
         moment.setTitle("创建第一个此刻");
-        moment.setStatus(DeleteStatus.NO);
+        moment.setIsDel(IsDelete.NO);
         moment.setContent("今天创建第一个此刻");
         moment.setPraiseUid(emptyArrayJson.toString());
         moment.setCollectionUid(emptyArrayJson.toString());
@@ -101,7 +102,7 @@ public class MongoMomentTest {
     		JSONArray emptyArrayJson = JSONArray.fromObject(new ArrayList<>());
     		moment.setUid(2l);
     		moment.setTitle("创建第"+i+"个此刻");
-    		moment.setStatus(DeleteStatus.NO);
+    		moment.setIsDel(IsDelete.NO);
     		moment.setContent("今天创建第"+i+"个此刻");
     		moment.setPraiseUid(emptyArrayJson.toString());
     		moment.setCollectionUid(emptyArrayJson.toString());

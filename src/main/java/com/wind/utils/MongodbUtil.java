@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.bson.BsonDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.slf4j.Logger;
@@ -87,6 +88,10 @@ public class MongodbUtil {
     			pstart = (Integer) params.get("pstart");
     			plimit = (Integer) params.get("plimit");
     			iterator.skip(pstart).limit(plimit);
+    		}
+    		if(params!=null && params.get("sort")!=null) {
+    			BsonDocument sort = (BsonDocument) params.get("sort");
+    			iterator.sort(sort);
     		}
     		
     		MongoCursor<Document> cursor = iterator.iterator();

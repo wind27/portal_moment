@@ -8,34 +8,35 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
+import net.sf.json.JSONArray;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.wind.commons.Constant;
 import com.wind.commons.Constant.MetaCode;
 import com.wind.commons.Constant.MetaMsg;
 import com.wind.commons.Meta;
+import com.wind.commons.ServiceResult;
 import com.wind.entity.Moment;
 import com.wind.entity.Param;
 import com.wind.entity.User;
-import com.wind.service.IMomentSqlService;
+import com.wind.mongo.service.CommentService;
+import com.wind.mongo.service.MomentService;
 import com.wind.service.IUserService;
-
-import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/moment")
 public class MomentController {
     @Resource
-    IMomentSqlService momentSqlService;
-    @Resource
     IUserService userService;
+    @Resource
+    MomentService momentService;
+    @Resource
+    CommentService commentService;
     
     //---------------------------- 页面跳转 -----------------------------------
     @RequestMapping(value = "/add",method = RequestMethod.GET)
@@ -61,17 +62,20 @@ public class MomentController {
     @ResponseBody
     public Object add(Param param, Moment moment, HttpServletRequest request) {
     	Map<String, Object> resultObject = new HashMap<>();
+    	if(param==null || moment==null) {
+    		resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
+    		return resultObject;
+    	}
     	JSONArray emptyArray = new JSONArray();
-    	
-    	moment.setCollectionUid(emptyArray.toString());
-    	moment.setCreateTime(System.currentTimeMillis());
-    	moment.setPraiseUid(emptyArray.toString());
-    	moment.setPublishTime(System.currentTimeMillis());
-    	moment.setStatus(Constant.DeleteStatus.NO);
-    	moment.setUid(param.getUid());
-    	moment.setUpdateTime(System.currentTimeMillis());
     	moment.setViewNum(0);
+    	moment.setUid(param.getUid());
+    	moment.setIsDel(Constant.IsDelete.NO);
+    	moment.setPraiseUid(emptyArray.toString());
+    	moment.setCollectionUid(emptyArray.toString());
     	
+    	moment.setCreateTime(System.currentTimeMillis());
+    	moment.setUpdateTime(System.currentTimeMillis());
+    	moment.setPublishTime(System.currentTimeMillis());
     	resultObject.put("meta", new Meta(MetaCode.SUCCESS, MetaMsg.SUCCESS));
     	return resultObject;
     }
