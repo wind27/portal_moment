@@ -21,7 +21,7 @@ public class IdsService {
 	private final static Logger logger = LoggerFactory.getLogger(IdsService.class);
 	
 	@Resource
-	MongodbUtil momentdbUtil;
+	MongodbUtil mongodbUtil;
 	
 	/**
 	 * 获取连接
@@ -30,7 +30,7 @@ public class IdsService {
 	 * @return
 	 */
 	public MongoCollection<Document> getColl() {
-		return momentdbUtil.getMongoCollection("wind", "ids");
+		return mongodbUtil.getMongoCollection("wind", "ids");
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public class IdsService {
 	public ServiceResult initMongodbIds() {
 		ServiceResult result = new ServiceResult();
 		try {
-			boolean momentFlag = false;
+			boolean articleFlag = false;
 			boolean commentFlag = false;
 			MongoCollection<Document> coll = getColl();
 			if(coll==null) {
@@ -54,8 +54,8 @@ public class IdsService {
 			if(cursor!=null) {
 				while (cursor.hasNext()) {
 					Document doc = cursor.next();
-					if(doc.getString("name").equals("moment")) {
-						momentFlag = true;
+					if(doc.getString("name").equals("article")) {
+						articleFlag = true;
 					}
 					if(doc.getString("name").equals("comment")) {
 						commentFlag = true;
@@ -63,9 +63,9 @@ public class IdsService {
 				}
 			}
 
-			if(!momentFlag) {
+			if(!articleFlag) {
 				Document doc = new Document();
-				doc.put("name", "moment");
+				doc.put("name", "article");
 				doc.put("next_index", 0l);
 				coll.insertOne(doc);
 			}

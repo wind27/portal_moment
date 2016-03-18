@@ -47,7 +47,6 @@ public class Constant {
     public class MetaCode {
         public static final int SUCCESS = 1000;
         public static final int FAIL = 1001;
-        public static final int SYSTEM_ERROR = 1002;
         public static final int PARAMS_ERROR = 1003;
         public static final int NOT_LOGIN = 1004;
         public static final int NO_RIGHT = 1005;
@@ -59,7 +58,6 @@ public class Constant {
     public class MetaMsg {
         public static final String SUCCESS = "请求成功";
         public static final String FAIL = "请求失败";
-        public static final String SYSTEM_ERROR = "系统错误";
         public static final String PARAMS_ERROR = "参数不正确";
         public static final String NOT_LOGIN = "请先登录";
         public static final String NO_RIGHT = "该用户没权限";
@@ -72,7 +70,6 @@ public class Constant {
     	public static final String SUCCESS = "请求成功";
     	public static final String FAIL = "请求失败";
     	public static final String PARAMS_ERROR = "参数不正确";
-    	public static final String SYSTEM_ERROR = "系统错误";
     	public static final String ID_INCREMENT_ERROR = "主键自增异常";
     }
     
@@ -125,6 +122,48 @@ public class Constant {
         public static final int MALE = 1;
     }
     
+    public class LoginType {
+        public static final int EMAIL = 1;
+        public static final int MOBILE = 2;
+    }
+    
+    public class RelationType {
+        public static final int NO_RELATION = 0;//没关系
+        public static final int FRIEND_TO = 1;//关注
+        public static final int FRIEND_BY = 2;//被关注
+        public static final int FRIEND_EACH = 3;//互相关注
+        public static final int DEFRIEND_TO = -1;//拉黑
+        public static final int DEFRIEND_BY = -2;//被拉黑
+        public static final int DEFRIEND_EACH = -3;//互相拉黑
+        
+    }
+    
+    public class RelationFocus {
+        public static final int YES = 1;//特别关注
+        public static final int NO = 0;//非特别关注
+    }
+    
+    
+    public static final int LIMIT_50 = 0;
+    
+    public class MongoSort {
+    	public static final int DESC = -1;
+    	public static final int ASC = 1;
+    }
+    
+    
+    //耗时日志模板
+    public static final String LOG_UID_URL_DESC_COSTTIME = "用户uid:{}; 请求url:{}; 接口描述:{}; 耗时{}毫秒";
+    //--------------------------------- article constant-----------------------------------------
+    public class ArticleStatus {
+    	public static final int DRAFT = 1;//1、草稿；
+    	public static final int PRIVATE = 2;//私有；
+    	public static final int PUBLISH = 3;//发布；
+    	public static final int PUBLISH_CANCEL = 4;//取消发布；
+    }
+    //--------------------------------- comment constant-----------------------------------------
+    //评论根路径父ID
+    public static final int COMMENT_ROOT_PID = 0;
     /**
      * 评论对象类型
      * 
@@ -148,40 +187,4 @@ public class Constant {
         public static final int REPLY = 2;
         public static final int REPOST = 3;
     }
-    
-    public class LoginType {
-        public static final int EMAIL = 1;
-        public static final int MOBILE = 2;
-    }
-    
-    public class RelationType {
-        public static final int NO_RELATION = 0;//没关系
-        public static final int FRIEND_TO = 1;//关注
-        public static final int FRIEND_BY = 2;//被关注
-        public static final int FRIEND_EACH = 3;//互相关注
-        public static final int DEFRIEND_TO = -1;//拉黑
-        public static final int DEFRIEND_BY = -2;//被拉黑
-        public static final int DEFRIEND_EACH = -3;//互相拉黑
-        
-    }
-    
-    public class RelationFocus {
-        public static final int YES = 1;//特别关注
-        public static final int NO = 0;//非特别关注
-    }
-    
-    public static final int COMMENT_ROOT_PID = 0;
-    
-    public static final int LIMIT_50 = 0;
-    
-    public class MongoSort {
-    	public static final int DESC = -1;
-    	public static final int ASC = 1;
-    }
-    
-    public static final int TREE_ROOT_ID = 0;
-    
-    //耗时日志模板
-    public static final String LOG_UID_URL_DESC_COSTTIME = "用户uid:{}; 请求url:{}; 接口描述:{}; 耗时{}毫秒";
-    
 }

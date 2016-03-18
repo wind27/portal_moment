@@ -50,11 +50,11 @@
 </div>
 
 <script type="text/javascript" src="../../../resources/js/lib/jquery.js"></script>
-<script type="text/javascript" src="../../../resources/js/moment/list.js"></script>
+<script type="text/javascript" src="../../../resources/js/article/list.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
-    	app.moment.init();
+    	app.article.init();
     });
 
 </script>

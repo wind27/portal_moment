@@ -9,23 +9,20 @@ import javax.annotation.Resource;
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
 import org.bson.BsonInt64;
-import org.bson.BsonValue;
 import org.bson.Document;
-import org.bson.codecs.BsonValueCodec;
-import org.bson.conversions.Bson;
 import org.springframework.stereotype.Service;
 
 import com.mongodb.client.MongoCollection;
 import com.wind.commons.Constant.ServiceMsg;
 import com.wind.commons.ServiceResult;
-import com.wind.entity.Moment;
-import com.wind.mongo.doc.utils.DocumentMongoUtil;
+import com.wind.entity.Article;
+import com.wind.mongo.doc.utils.DocumentArticleTransfer;
 import com.wind.utils.MongodbUtil;
 
 @Service
-public class MomentService {
+public class ArticleService {
 	@Resource
-	MongodbUtil momentdbUtil;
+	MongodbUtil articledbUtil;
 	@Resource
 	IdsService idsService;
 	
@@ -37,19 +34,19 @@ public class MomentService {
 	 * @return
 	 */
 	public MongoCollection<Document> getColl() {
-		return momentdbUtil.getMongoCollection("wind", "moment");
+		return articledbUtil.getMongoCollection("wind", "article");
 	}
 	//-----------------------------------------------------------
 	/**
 	 *  插入
 	 * 
 	 * @author qianchun  @date 2016年3月3日 下午2:20:25
-	 * @param moment
+	 * @param article
 	 * @return
 	 */
-	public ServiceResult create(Moment moment) {
-		ServiceResult result = new ServiceResult();
-		if(moment==null) {
+	public ServiceResult<Article> create(Article article) {
+		ServiceResult<Article> result = new ServiceResult<Article>();
+		if(article==null) {
 			result.setSuccess(false);
 			result.setMsg(ServiceMsg.PARAMS_ERROR);
 			return result;
@@ -57,17 +54,17 @@ public class MomentService {
 		
 		//获取并插入自增主键id
 		MongoCollection<Document> coll = getColl();
-		long id = idsService.getNextIndex("moment");
+		long id = idsService.getNextIndex("article");
 		if(id==0) {
 			result.setSuccess(false);
 			result.setMsg(ServiceMsg.ID_INCREMENT_ERROR);
 			return result;
 		}
-		moment.setId(id);
+		article.setId(id);
 		
 		//插入
-		Document doc = DocumentMongoUtil.moment2Document(moment);
-		boolean flag = momentdbUtil.insert(coll, doc);
+		Document doc = DocumentArticleTransfer.article2Document(article);
+		boolean flag = articledbUtil.insert(coll, doc);
 		if(flag) {
 			result.setSuccess(true);
 			return result;
@@ -82,38 +79,38 @@ public class MomentService {
 	 *  批量插入
 	 * 
 	 * @author qianchun  @date 2016年3月3日 下午2:20:25
-	 * @param moment
+	 * @param article
 	 * @return
 	 */
-	public ServiceResult batchCreate(List<Moment> momentList) {
-		ServiceResult result = new ServiceResult();
+	public ServiceResult<Article> batchCreate(List<Article> articleList) {
+		ServiceResult<Article> result = new ServiceResult<Article>();
 		
-		if(momentList==null || momentList.size()==0) {
+		if(articleList==null || articleList.size()==0) {
 			result.setSuccess(false);
 			result.setMsg(ServiceMsg.PARAMS_ERROR);
 			return result;
 		}
 		MongoCollection<Document> coll = getColl();
-		for(int i=0; i<momentList.size(); i++) {
-			Moment moment = momentList.get(i);
-			if(moment!=null) {
-				long id = idsService.getNextIndex("moment");
+		for(int i=0; i<articleList.size(); i++) {
+			Article article = articleList.get(i);
+			if(article!=null) {
+				long id = idsService.getNextIndex("article");
 				if(id==0) {
 					result.setSuccess(false);
 					result.setMsg(ServiceMsg.ID_INCREMENT_ERROR);
 					return result;
 				}
-				moment.setId(id);
+				article.setId(id);
 			}
 		}
 		
- 		List<Document> docList = DocumentMongoUtil.moment2Document(momentList);
+ 		List<Document> docList = DocumentArticleTransfer.article2Document(articleList);
 		if(docList==null || docList.size()==0) {
 			result.setSuccess(false);
 			result.setMsg(ServiceMsg.PARAMS_ERROR);
 			return result;
 		}
-		boolean flag = momentdbUtil.batchInsert(coll, docList);
+		boolean flag = articledbUtil.batchInsert(coll, docList);
 		if(flag) {
 			result.setSuccess(true);
 			result.setMsg(ServiceMsg.SUCCESS);
@@ -131,19 +128,29 @@ public class MomentService {
 	 * @param params
 	 * @return
 	 */
-	public ServiceResult update(Bson filter, Document document) {
-		ServiceResult result = new ServiceResult();
-		if(filter==null || document==null) {
+	public ServiceResult<Article> updateById(long id, Article article) {
+		ServiceResult<Article> result = new ServiceResult<Article>();
+		if(id==0 || article==null) {
 			result.setSuccess(false);
-			return null;
+			result.setMsg(ServiceMsg.PARAMS_ERROR);
+			return result;
 		}
 		MongoCollection<Document> coll = getColl();
+		BsonDocument filter = new BsonDocument().append("id", new BsonInt64(id));
+		Document document = DocumentArticleTransfer.article2Document(article);
 		coll.findOneAndUpdate(filter, document);
-		document = momentdbUtil.update(coll, filter, document);
-		return null;
+		document = articledbUtil.update(coll, filter, document);
+		if(document==null) {
+			result.setSuccess(false);
+			result.setMsg(ServiceMsg.SUCCESS);
+		} else {
+			result.setSuccess(true);
+			result.setMsg(ServiceMsg.FAIL);
+		}
+		return result;
 	}
 	
-	
+	//---------------------------- 查询数据 -----------------------------------
 	/**
 	 * 查询
 	 * 
@@ -151,24 +158,31 @@ public class MomentService {
 	 * @param params
 	 * @return
 	 */
-	public ServiceResult find(Map<String, Object> params) {
-		ServiceResult result = new ServiceResult();
-		List<Moment> momentList = null;
+	public ServiceResult<Article> find(Map<String, Object> params) {
+		ServiceResult<Article> result = new ServiceResult<Article>();
+		List<Article> articleList = null;
 		MongoCollection<Document> coll = getColl();
-		List<Document> docList = momentdbUtil.find(coll, params);
+		List<Document> docList = articledbUtil.find(coll, params);
 		if(docList!=null) {
-			momentList = DocumentMongoUtil.doc2Moment(docList);
+			articleList = DocumentArticleTransfer.document2Article(docList);
 		}
 		result.setSuccess(true);
-		result.setData(momentList);
+		result.setList(articleList);
 		return result;
 	}
-	
-	public ServiceResult findByUids(List<Long> uidList, int pstart, int plimit) {
-		ServiceResult result = new ServiceResult();
+	/**
+	 * 根据uids查询
+	 * 
+	 * @author qianchun  @date 2016年3月14日 下午2:53:59
+	 * @param uidList
+	 * @param pstart
+	 * @param plimit
+	 * @return
+	 */
+	public ServiceResult<Article> findByUids(List<Long> uidList, int pstart, int plimit) {
+		ServiceResult<Article> result = new ServiceResult<Article>();
 
 		Map<String, Object> params = new HashMap<String, Object>();
-		
 		//添加分页条件
 		if(plimit>0) {
 			params.put("pstart", pstart);
@@ -195,15 +209,33 @@ public class MomentService {
 		//查询
 		MongoCollection<Document> coll = getColl();
 		params.put("filter", filter);
-		List<Document> docList = momentdbUtil.find(coll, params);
-		List<Moment> momentList = null;
+		List<Document> docList = articledbUtil.find(coll, params);
+		List<Article> articleList = null;
 		if(docList!=null) {
-			momentList = DocumentMongoUtil.doc2Moment(docList);
+			articleList = DocumentArticleTransfer.document2Article(docList);
 		}
 		result.setSuccess(true);
-		result.setData(momentList);
+		result.setList(articleList);
 		return result;
 	}
-	
+	/**
+	 * 根据id查询
+	 * 
+	 * @author qianchun  @date 2016年3月14日 下午2:55:03
+	 * @param id
+	 * @return
+	 */
+	public ServiceResult<Article> findById(long id) {
+		ServiceResult<Article> result = new ServiceResult<Article>();
+		Article article = null;
+		MongoCollection<Document> coll = getColl();
+		Document document = articledbUtil.findById(coll, id);
+		if(document!=null) {
+			article = DocumentArticleTransfer.document2Article(document);
+		}
+		result.setSuccess(true);
+		result.setObject(article);
+		return result;
+	}
 	//-----------------------------------------------------------
 }

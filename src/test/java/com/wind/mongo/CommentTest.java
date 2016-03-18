@@ -27,8 +27,8 @@ public class CommentTest {
     
     @Test
     public void main() {
-//    	Moment moment1 = createMoment1();
-//    	boolean flag = momentMongoService.create(moment1);
+//    	article article1 = createarticle1();
+//    	boolean flag = articleMongoService.create(article1);
 //    	if(flag==true) {
 //    		System.out.println("插入成功");
 //    	}
@@ -36,15 +36,15 @@ public class CommentTest {
 //    	Map<String, Object> params = new HashMap<String, Object>();
 //    	params.put("skip", 0);
 //    	params.put("limit", 1);
-//    	List<Moment> momentList = momentMongoService.find(params);
-//        JSONArray array = JSONArray.fromObject(momentList);
+//    	List<article> articleList = articleMongoService.find(params);
+//        JSONArray array = JSONArray.fromObject(articleList);
 //        System.out.println(array.toString());
     	
-//    	Moment moment2 = createMoment2();
+//    	article article2 = createarticle2();
 //    	Bson filter = new BsonDocument()
 //    			.append("id", new BsonInt64(1));
-//    	Document document = DocumentMongoUtil.moment2Document(moment2);
-//    	momentMongoService.replace(filter, document);
+//    	Document document = DocumentMongoUtil.article2Document(article2);
+//    	articleMongoService.replace(filter, document);
     	
 //    	List<Comment> commentList = createCommentList(10);
 //    	ServiceResult serviceResult= commentService.batchCreate(commentList);
@@ -56,17 +56,17 @@ public class CommentTest {
     	
     	List<Long> targetIdsList = new ArrayList<>();
     	targetIdsList.add(1l);
-    	ServiceResult result = commentService.findByTargetIds(targetIdsList);
+    	ServiceResult<Comment> result = commentService.findMapByTargetIds(targetIdsList);
     	if(result.isSuccess()) {
-    		System.out.println(JSONArray.fromObject(result.getData()).toString());
+    		System.out.println(JSONArray.fromObject(result.getMap()).toString());
     	}
         
 //    	Map<String, Object> params = new HashMap<String, Object>();
 //    	params.put("skip", 0);
 //    	params.put("limit", 10);
 //    	params.put("bson", filter);
-//    	List<Moment> momentList = momentMongoService.find(params);
-//        JSONArray array = JSONArray.fromObject(momentList);
+//    	List<article> articleList = articleMongoService.find(params);
+//        JSONArray array = JSONArray.fromObject(articleList);
 //        System.out.println(array.toString());
     }
     
@@ -74,12 +74,12 @@ public class CommentTest {
     	Comment comment = new Comment();
         comment.setContent("评论1");
         comment.setCreateTime(System.currentTimeMillis());
-        comment.setPid(Constant.TREE_ROOT_ID);
+        comment.setPid(Constant.COMMENT_ROOT_PID);
         comment.setIsDel(IsDelete.NO);
         
         comment.setTargetId(1l);
         comment.setTargetUid(1001);
-        comment.setTargetType(Constant.CommentTargetType.MOMENT);
+        comment.setTargetType(Constant.CommentTargetType.ARTICLE);
         
         comment.setOperateUid(1001);
         comment.setOperateTime(System.currentTimeMillis());
@@ -93,12 +93,12 @@ public class CommentTest {
     		Comment comment = new Comment();
             comment.setContent("评论"+i);
             comment.setCreateTime(System.currentTimeMillis());
-            comment.setPid(Constant.TREE_ROOT_ID);
+            comment.setPid(Constant.COMMENT_ROOT_PID);
             comment.setIsDel(IsDelete.NO);
             
             comment.setTargetId(1l);
             comment.setTargetUid(1001);
-            comment.setTargetType(Constant.CommentTargetType.MOMENT);
+            comment.setTargetType(Constant.CommentTargetType.ARTICLE);
             
             comment.setOperateUid(1001);
             comment.setOperateTime(System.currentTimeMillis());

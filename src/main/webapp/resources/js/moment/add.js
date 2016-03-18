@@ -1,10 +1,10 @@
 var app = {
-    moment: {}
+    article: {}
 };
 
 (function (P) {
     var _this = null;
-    _this = P.moment = {
+    _this = P.article = {
         init : function () {
             _this.initEvent();
             _this.search();
@@ -37,7 +37,7 @@ var app = {
     		
     		$.ajax({
     			type: "POST",
-  			  	url: ctx + "/moment/add",
+  			  	url: ctx + "/article/add",
   			  	data: data,
   			  	dataType: "json",
   			  	success: function(result) {

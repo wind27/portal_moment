@@ -89,7 +89,7 @@ public class RelationController {
             }
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
+            resultObject.put("meta", new Meta(MetaCode.FAIL, MetaMsg.FAIL));
             logger.error(RelationController.class.getName() + " : " + "添加关注异常！！！");
             e.printStackTrace();
         }
@@ -138,7 +138,7 @@ public class RelationController {
             }
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
+            resultObject.put("meta", new Meta(MetaCode.FAIL, MetaMsg.FAIL));
             logger.error(RelationController.class.getName() + " : " + "取消关注异常！！！");
             e.printStackTrace();
         }

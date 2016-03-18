@@ -1,10 +1,10 @@
 var app = {
-    moment: {}
+    article: {}
 };
 
 (function (P) {
     var _this = null;
-    _this = P.moment = {
+    _this = P.article = {
         param: {
         	uid : 1,
             start: 1,
@@ -45,7 +45,7 @@ var app = {
             $.ajax({
                 type: 'get',
                 contentType: 'application/json',
-                url: '/moment/list'+params,
+                url: '/article/list'+params,
                 dataType: "json",
                 success: function (result) {
                     if (result.meta.code == 1) {

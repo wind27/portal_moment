@@ -8,11 +8,8 @@ import java.io.Serializable;
  * @author qianchun
  * @date 2016年1月25日 下午5:37:00
  */
-public class Moment implements Serializable {
+public class Article implements Serializable {
     private static final long serialVersionUID = 1L;
-    //是否私有：1、私有；2、公布；3、取消发布；
-    //是否草稿
-    
     
     private long id;
     private String title;//标题
@@ -26,7 +23,7 @@ public class Moment implements Serializable {
     private String collectionUid;//收藏用户
     private int viewNum;//浏览数
     private int isDel;//状态：0、未删除；1、已删除
-    
+    private int status;//是否私有：1、草稿；2、私有；3、公布；
     
 	public long getId() {
 		return id;
@@ -99,5 +96,11 @@ public class Moment implements Serializable {
 	}
 	public void setIsDel(int isDel) {
 		this.isDel = isDel;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

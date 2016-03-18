@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.bson.BsonDocument;
+import org.bson.BsonInt32;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.slf4j.Logger;
@@ -19,7 +20,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.UpdateResult;
-import com.wind.mongo.service.IdsService;
 
 import net.sf.json.JSONObject;
 
@@ -57,7 +57,7 @@ public class MongodbUtil {
 		}
     	return coll;
     }
-    
+    //---------------------------- 获取数据 -----------------------------------
     /**
      * 查询
      * 
@@ -71,7 +71,7 @@ public class MongodbUtil {
     		return null;
     	}
     	try {
-    		List<Document> momentList = new ArrayList<Document>();
+    		List<Document> documentList = new ArrayList<Document>();
     		Bson bson = null;
     		Integer pstart = 0;
     		Integer plimit = 0;
@@ -99,16 +99,46 @@ public class MongodbUtil {
     			while (cursor.hasNext()) {
     				Document doc = cursor.next();
     				if(doc!=null) {
-    					momentList.add(doc);
+    					documentList.add(doc);
     				}
     			}
     		}
-    		return momentList;
+    		return documentList;
 		} catch (Exception e) {
 			logger.error("查询异常");
 			return null;
 		}
     }
+    /**
+     * find by id
+     * 
+     * @author qianchun  @date 2016年3月14日 下午3:03:00
+     * @param coll
+     * @param id
+     * @return
+     */
+    public Document findById(MongoCollection<Document> coll, long id) {
+    	if(coll==null) {
+    		return null;
+    	}
+    	try {
+    		Document doc = null;
+    		FindIterable<Document> iterator = null;
+			BsonDocument filter = new BsonDocument().append("id", new BsonInt32(1));
+			iterator = coll.find(filter).skip(0).limit(1);
+    		MongoCursor<Document> cursor = iterator.iterator();
+    		if(cursor!=null) {
+    			while (cursor.hasNext()) {
+    				doc = cursor.next();
+    			}
+    		}
+    		return doc;
+		} catch (Exception e) {
+			logger.error("查询异常");
+			return null;
+		}
+    }
+    //---------------------------- 获取结束 -----------------------------------
     
     /**
      * 插入

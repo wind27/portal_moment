@@ -45,7 +45,7 @@ public class UserController {
             flag = userService.updateStatus(Long.parseLong(id), Integer.parseInt(status));
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
+            resultObject.put("meta", new Meta(MetaCode.FAIL, MetaMsg.FAIL));
         }
         
         if(flag==true) {
@@ -91,7 +91,7 @@ public class UserController {
             flag = userService.update(params);
         }
         catch (Exception e) {
-            resultObject.put("meta", new Meta(MetaCode.SYSTEM_ERROR, MetaMsg.SYSTEM_ERROR));
+            resultObject.put("meta", new Meta(MetaCode.FAIL, MetaMsg.FAIL));
         }
         if(flag==true) {
             resultObject.put("meta", new Meta(MetaCode.SUCCESS, MetaMsg.SUCCESS));

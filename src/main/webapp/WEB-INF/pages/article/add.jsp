@@ -5,7 +5,7 @@
 <head>
 	<%@include file="/WEB-INF/pages/commons/meta.jsp"%>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-    <title>动态查询</title>
+    <title>文章添加</title>
     
     <style type="text/css">
 	p {
@@ -18,10 +18,10 @@
 		margin-bottom: 10px;
 	}
 </style>
-<script type="text/javascript" src="../../../resources/js/moment/add.js"></script>
+<script type="text/javascript" src="../../../resources/js/article/add.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-	app.moment.init();
+	app.article.init();
 });
 </script> 
 </head>
