@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.wind.commons.Constant;
 import com.wind.commons.Constant.DeleteStatus;
 import com.wind.commons.Constant.IsDelete;
 import com.wind.commons.ServiceResult;
@@ -53,7 +54,7 @@ public class ArticleTest {
 //    	articleMongoService.replace(filter, document);
     	
     	List<Article> articleList = createarticleList(1000);
-    	ServiceResult serviceResult= articleService.batchCreate(articleList);
+    	ServiceResult<Article> serviceResult= articleService.batchCreate(articleList);
     	if(serviceResult.isSuccess()==false) {
     		System.out.println("批量插入失败");
     	} else {
@@ -81,33 +82,39 @@ public class ArticleTest {
     public Article createarticle1() {
         Article article = new Article();
         JSONArray emptyArrayJson = JSONArray.fromObject(new ArrayList<>());
-        article.setUid(1l);
-        article.setId(1l);
-        article.setTitle("创建第一个此刻");
+        article.setUid(1001l);
+        article.setId(0l);
+        article.setViewNum(0);
         article.setIsDel(IsDelete.NO);
-        article.setContent("今天创建第一个此刻");
+        article.setTitle("创建第0个此刻");
+        article.setDesc("今天创建第0个此刻");
+        article.setContent("今天创建第0个此刻");
         article.setPraiseUid(emptyArrayJson.toString());
         article.setCollectionUid(emptyArrayJson.toString());
         article.setCreateTime(System.currentTimeMillis());
         article.setUpdateTime(System.currentTimeMillis());
         article.setPublishTime(System.currentTimeMillis());
+        article.setStatus(Constant.ArticleStatus.PUBLISH);
         return article;
     }
     
     public List<Article> createarticleList(int size) {
     	List<Article> articleList = new ArrayList<Article>();
-    	for(int i=0; i<size; i++) {
+    	for(int i=1; i<=size; i++) {
     		Article article = new Article();
     		JSONArray emptyArrayJson = JSONArray.fromObject(new ArrayList<>());
-    		article.setUid(2l);
-    		article.setTitle("创建第"+i+"个此刻");
+    		article.setUid(1001l);
+    		article.setViewNum(0);
     		article.setIsDel(IsDelete.NO);
+    		article.setTitle("创建第"+i+"个此刻");
+    		article.setDesc("今天创建第"+i+"个此刻");
     		article.setContent("今天创建第"+i+"个此刻");
     		article.setPraiseUid(emptyArrayJson.toString());
     		article.setCollectionUid(emptyArrayJson.toString());
     		article.setCreateTime(System.currentTimeMillis());
     		article.setUpdateTime(System.currentTimeMillis());
     		article.setPublishTime(System.currentTimeMillis());
+    		article.setStatus(Constant.ArticleStatus.PUBLISH);
     		articleList.add(article);
     	}
         return articleList;

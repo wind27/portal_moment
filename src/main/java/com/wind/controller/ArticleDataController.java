@@ -332,13 +332,17 @@ public class ArticleDataController {
 		Map<String, Object> resultObject = new HashMap<>();
 		List<Map<String, Object>> articleMapList = new ArrayList<>();
 
+		//参数处理
+		if(param.getPstart()==0) {
+			param.setPstart(Constant.DEFAULT_PAGE_START);
+		}
+		if(param.getPlimit()==0) {
+			param.setPlimit(Constant.DEFAULT_PAGE_LIMIT);
+		}
+		
 		//根据用户id获取articleList
 		List<Long> uids = new ArrayList<Long>();
 		uids.add(param.getUid());
-		if(param.getPlimit()==0) {
-			resultObject.put("meta", new Meta(MetaCode.PARAMS_ERROR, MetaMsg.PARAMS_ERROR));
-			return resultObject;
-		}
 		ServiceResult<Article> articleServiceResult = articleService.findByUids(uids, param.getPstart(), param.getPlimit());
 		if(articleServiceResult.isSuccess()==false) {
 			resultObject.put("meta", new Meta(MetaCode.FAIL, MetaMsg.FAIL));
@@ -356,6 +360,7 @@ public class ArticleDataController {
 				}
 			}
 		}
+
 		//获取评论列表
 		ServiceResult<Comment> commentServiceResult = commentService.findMapByTargetIds(articleIds);
 	    if(commentServiceResult.isSuccess()==false) {

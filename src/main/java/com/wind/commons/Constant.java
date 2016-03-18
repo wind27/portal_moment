@@ -187,4 +187,6 @@ public class Constant {
         public static final int REPLY = 2;
         public static final int REPOST = 3;
     }
+    public static final int DEFAULT_PAGE_START = 1;
+    public static final int DEFAULT_PAGE_LIMIT = 20;
 }
